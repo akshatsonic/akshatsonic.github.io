@@ -12,17 +12,17 @@ const { title, description, pubDate, heroImage, heroImageTitle, tags, readTime }
 
 ---
 
-<html lang="en" class="light">
+<html lang="en" class="dark">
   <head>
     <BaseHead title={title} description={description} />
   </head>
-  <body class="w-full max-w-screen-md mx-auto my-4 light:bg-neutral-800 light:text-neutral-300 transition-colors duration-300">
+  <body class="w-full max-w-screen-md mx-auto my-4 dark:bg-neutral-800 dark:text-neutral-300 transition-colors duration-300">
     <Header />
     <main>
       <article class="px-4">
         <div class="flex justify-between mb-6">
           <FormattedDate date={pubDate} />
-          <p class="text-gray-500 light:text-neutral-400 text-xs font-medium tracking-wide">
+          <p class="text-gray-500 dark:text-neutral-400 text-xs font-medium tracking-wide">
             {readTime} read
           </p>
         </div>
@@ -33,7 +33,7 @@ const { title, description, pubDate, heroImage, heroImageTitle, tags, readTime }
           {
             heroImage && (
               <img width={1020} height={510} src={heroImage} alt="" />
-              <p class="italic text-xs text-gray-600 light:text-neutral-400" set:html={heroImageTitle}></p>
+              <p class="italic text-xs text-gray-600 dark:text-neutral-400" set:html={heroImageTitle}></p>
             )
           }
         </div>
@@ -95,7 +95,7 @@ blockquote {
     margin: 20px 0;
     color: #666;
     background-color: #f9f9f9;
-    @apply light:bg-neutral-700 text-white border-l-4 border-neutral-500; 
+    @apply dark:bg-neutral-700 text-white border-l-4 border-neutral-500; 
 }
 
 /* Code Blocks and Inline Code */
@@ -127,7 +127,7 @@ th, td {
 
 th {
     background-color: #f4f4f4;
-    @apply light:bg-neutral-700;
+    @apply dark:bg-neutral-700;
 }
 
 /* Lists */
