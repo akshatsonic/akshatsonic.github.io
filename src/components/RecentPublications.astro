@@ -22,6 +22,7 @@ let recentPosts = posts.slice(0, numberOfPostsToDisplay);
           <a class="font-bold text-lg" href={`/blog/${post.slug}`}>
             {post.data.title}
           </a>
+          <p class="text-gray-500 dark:text-neutral-400 text-xs font-medium">{post.data.description}</p>
           <div class="flex gap-2">
               {post.data.tags?.map((i) => {
                 return <TagLink tag={i} />;
