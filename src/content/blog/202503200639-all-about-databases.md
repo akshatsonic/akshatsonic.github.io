@@ -178,7 +178,7 @@ While reading, the operation has to consider all messages on its path in order t
 ## Conclusion
 
 Congrats, you made it to the end! 🎉 Either you’re truly dedicated, incredibly bored, or just scrolling aimlessly through life—no judgment. Since this was reposted from my <span>
-<a href="https://systemdesign.one/bloom-filters-explained/" target="_blank">
+<a href="https://medium.com/@akshatsonic/all-about-databases-b774bf975061" target="_blank">
     <span style='color:#7c68ed'>Medium Blog</span>
 </a>
 </span> , it might feel a little less spicy than usual. But hey, stick around—better, funnier, and possibly life-altering content is coming soon! (Or at least something mildly entertaining.) 😆
