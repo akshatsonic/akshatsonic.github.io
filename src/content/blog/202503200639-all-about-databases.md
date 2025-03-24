@@ -3,7 +3,7 @@ title: 'All about databases'
 description: 'Ledgers for your service'
 pubDate: 'Mar 20 2025'
 heroImage: '/all-about-databases/heroim.jpeg'
-heroImageTitle: Photo by <a href='https://www.instagram.com/victormoriyama'>Victor Moriyama</a>
+heroImageTitle: Photo by <a style='color:#ed6bc4' href='https://www.instagram.com/victormoriyama'>Victor Moriyama</a>
 tags: ["database", "backend"]
 readTime: '6 min'
 ---

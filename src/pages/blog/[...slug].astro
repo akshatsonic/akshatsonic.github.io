@@ -13,6 +13,10 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await post.render();
+const markdownText = post.body;
+const wordCount = markdownText.split(/\s+/).filter(Boolean).length;
+const minOrSec = Math.ceil(wordCount / 200) < 1 ? ' sec' : ' min';
+post.data.readTime = Math.ceil(wordCount / 200) + minOrSec;
 ---
 
 <BlogPost {...post.data}>
