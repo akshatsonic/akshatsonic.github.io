@@ -10,24 +10,49 @@ readTime: '6 min'
 
 So I was exposed to reactive framework when i was given a project to be migrate an existing service (home page) to the new reactive paradigm. I was introduced to Spring WebFlux along with Netty (the reactive server). I was overwhelmed by the amount of information I was consuming. So here’s my experience on how i got a small grasp 🤝 of spring webflux and shifted my mind to reactive paradigm.
 
-## Non Reactive Programming (blocking)
+# Non-Reactive Programming (a.k.a. The Blocking Life)
 
-If you are a software developer or have ever built web applications in your life, you might have used blocking / non-reactive paradigm of programming. I would be taking Spring framework as an example here. In Spring Web , one-thread-per-request model is used to serve server requests. You send a request to the server, the server assigns a thread to your request (this thread is called as ***main thread***) and this thread is responsible for sending result back to you. 
+If you’ve ever built a web application (or just suffered through one), chances are you’ve encountered the good ol’ **blocking** model — a.k.a. **non-reactive programming**. Let’s use the Spring Framework as our guinea pig here.
 
-Now what happens when you do an IO/DB call in this request? Your main thread is blocked and is waiting for the IO/DB call to finish, hence it is a blocking call. There is a workaround to this when using CompletableFutures in Java, where you assign a new thread to an IO call and make the call asynchronous in nature, while you use main thread to proceed ahead with next tasks. Here the future threads are the one that are waiting for the result and the main thread is free. 
-But this also leads to problems at scale when your service is handling many requests per second. Since the application has limited threads, we see an increase in blocked threads and higher latencies as all the threads are blocked. To solve this issue reactive paradigm was introduced.
+In **Spring Web**, we follow a classic pattern:  
+> One request = One thread (a.k.a. the *main thread*).  
 
-## Reactive Programming (non blocking)
+When you hit the server with a request, it grabs a thread and says,  
+> “Alright buddy, your job is to handle this request till the end. Don’t mess it up.”
 
-Reactive paradigm of programming might seem confusing at first, but can turn out to be very handy if one understands how it works. The core essence of reactive programming states that **“any blocking call will be executed when it is needed”** (hence ***reacting*** to the need). Here every result of IO/DB operations are “data streams” that can be observed and reacted to. Adopting the reactive programming paradigm helps to **free up threads of execution from this waiting** and provides a mechanism to return to a task once results are available, leading to **much better resource utilisation**. 
+Now imagine this thread needs to call a database or an external service. It has to wait... and wait... and wait.  
+That’s what we call **blocking** — the thread literally just sits there twiddling its thumbs until the IO or DB responds.
 
-Here the data structures used for reactive paradigm in Spring are Mono & Flux. These are the publishers of data streams and the subscribers subscribe to these structures whenever needed. As discussed earlier, CompletableFuture also provide similar asynchronous activity, just they are executed right away, however here the `subscribe()` method actually calls the IO/DB tasks.
-Now one must think that these are also blocking right? How is `subscribe()` in reactive paradigm different from `get()` in `CompletableFuture`?
+You can try to be clever and offload this waiting to another thread using `CompletableFuture`, which does help — kind of like saying:  
+> “Hey FutureThread, you wait here. I’ll go do something useful.”
 
-The fundamental difference lies in their blocking behavior:
+But at scale, this becomes chaos. Threads are precious. You can’t just go spawning new ones like it’s a thread party — eventually, you run out, and boom — latency spikes, performance tanks, and your service goes from blazing fast to molasses slow.
 
--- **`get()` is a blocking call** that makes the calling thread wait until the CompletableFuture operation is complete.
+## Enter: Reactive Programming
 
--- **`subscribe()` initiates a non-blocking execution** of the `Mono` pipeline. The thread that calls `subscribe()` does not wait for the Mono to complete. Instead, the operations within the `Mono` are typically executed on different threads managed by schedulers (like Schedulers.boundedElastic()), and the results are delivered asynchronously to the subscriber.
+Reactive programming might sound fancy and mysterious at first, but it’s basically the cool, efficient friend who says:  
+> “Don’t block me, bro. I’ll react when I’m needed.”
 
-Therefore, calling `subscribe()` makes the `Mono` part execute, but it does not make it a blocking call in the same way that `CompletableFuture.get()` does. `subscribe()` hooks up the logic for handling the eventual result (or error) without pausing the current thread, which is a core principle of reactive programming. The blocking equivalent in the reactive world is the explicit block() method.
+The big idea? **Stop wasting threads by making them wait.**  
+Instead, treat everything (yes, even DB responses) as **data streams** you can *subscribe to*. When the data’s ready, you react. Until then — carry on, nothing to see here.
+
+In Spring's reactive world, you’ll meet two new data types:  
+- `Mono`: emits 0 or 1 item  
+- `Flux`: emits 0... n items (basically `Mono`, but with an appetite)
+
+These are like the Netflix of data: you *subscribe* to them and get notified when something new is out.
+
+Now you might ask —  
+> “Wait, doesn’t `subscribe()` sound kinda like `CompletableFuture.get()`?”  
+
+Great question! Let’s clear that up:
+
+| Method                   | What it does                                        |
+|-------------------------|-----------------------------------------------------|
+| `CompletableFuture.get()` | Blocks the thread until the result is ready (classic!) |
+| `Mono.subscribe()`       | Non-blocking — just sets up what to do *when* the result arrives |
+
+So while `get()` makes your thread sit and wait (with a cup of coffee and existential dread), `subscribe()` says:  
+> “Here’s what to do when it’s ready — until then, I’ve got other stuff to do.”
+
+Want to block in reactive world? You still can — just use `block()`. But if you're going reactive, that’s kind of defeating the point, don’t you think?
