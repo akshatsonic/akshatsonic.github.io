@@ -1,6 +1,6 @@
 ---
 title: 'Reactive Programming : How I see it ?'
-description: 'Ledgers for your service'
+description: 'Free your threads from waiting'
 pubDate: 'Apr 24 2025'
 heroImage: '/reactive-progamming/heroimage.jpeg'
 heroImageTitle: Stranded by <a style='color:#ed6bc4' href='https://www.instagram.com/akshatsonic'>Me</a>
