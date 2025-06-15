@@ -5,7 +5,7 @@ import TagLink from "./TagLink.astro";
 
 const posts = await getCollection("blog");
 let numberOfPostsToDisplay = 3;
-let recentPosts = posts.slice(posts.length-numberOfPostsToDisplay, numberOfPostsToDisplay).reverse();
+let recentPosts = posts.slice(posts.length-numberOfPostsToDisplay, posts.length).reverse();
 ---
 
 <div class="px-4 md:px-16 flex flex-col gap-4 mt-16">
