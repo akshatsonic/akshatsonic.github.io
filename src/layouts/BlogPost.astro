@@ -5,6 +5,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import TagLink from "../components/TagLink.astro";
+import { themeColors } from "../theme.js";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -15,7 +16,7 @@ const { title, description, pubDate, heroImage, heroImageTitle, tags, readTime }
   <head>
     <BaseHead title={title} description={description} image={heroImage}/>
   </head>
-  <body class="w-full max-w-screen-md mx-auto my-4 dark:bg-neutral-800 dark:text-neutral-300 transition-colors duration-300">
+  <body class="w-full max-w-screen-md mx-auto my-4 bg-sage-100 dark:bg-sage-900 dark:text-sage-100 transition-colors duration-300">
     <Header />
     <main>
       <article class="px-4">
@@ -89,12 +90,12 @@ p {
 
 /* Blockquotes */
 blockquote {
-    border-left: 4px solid #ccc;
+    border-left: 4px solid ${themeColors.components.border.light};
     padding: 10px 20px;
     margin: 20px 0;
-    color: #666;
-    background-color: #f9f9f9;
-    @apply dark:bg-neutral-700 text-white border-l-4 border-neutral-500; 
+    color: ${themeColors.components.text.sage.light};
+    background-color: ${themeColors.background.cream};
+    @apply dark:bg-sage-800 dark:text-sage-100 border-l-4 border-sage-300; 
 }
 
 /* Code Blocks and Inline Code */
@@ -121,12 +122,13 @@ table {
 
 th, td {
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid ${themeColors.components.border.light};
+    @apply dark:border-sage-600;
 }
 
 th {
-    background-color: #f4f4f4;
-    @apply dark:bg-neutral-700;
+    background-color: ${themeColors.sage[200]};
+    @apply dark:bg-sage-700;
 }
 
 /* Lists */
@@ -166,10 +168,45 @@ sup, sub {
 sup { top: -0.5em; }
 sub { bottom: -0.25em; }
 
+/* Headers - Remove any underlines and override any inherited styles */
+article h1, article h2, article h3, article h4, article h5, article h6,
+h1, h2, h3, h4, h5, h6 {
+    text-decoration: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
 
+article h1 a, article h2 a, article h3 a, article h4 a, article h5 a, article h6 a,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    text-decoration: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    color: inherit !important;
+}
 
+/* Ensure title specifically has no underlines */
+.text-5xl {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+/* Links - Using Centralized Theme Colors */
+a {
+    color: #819a91 !important;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #6b8a7f !important;
+}
+
+.dark a {
+    color: #a7c1a8 !important;
+}
+
+.dark a:hover {
+    color: #d1d8be !important;
+}
 
 </style>
-
-
-  </html>

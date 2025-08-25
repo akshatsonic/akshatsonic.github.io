@@ -3,7 +3,7 @@ title: 'All about databases'
 description: 'Ledgers for your service'
 pubDate: 'Mar 20 2025'
 heroImage: '/all-about-databases/heroim.jpeg'
-heroImageTitle: Photo by <a style='color:#ed6bc4' href='https://www.instagram.com/victormoriyama'>Victor Moriyama</a>
+heroImageTitle: Photo by <a href='https://www.instagram.com/victormoriyama'>Victor Moriyama</a>
 tags: ["database", "backend"]
 readTime: '6 min'
 ---
@@ -17,7 +17,7 @@ Data → information, Base → platform
 
 Will be pasting link here :)
 <a href="https://www.simplilearn.com/tutorials/dbms-tutorial/what-are-various-types-of-databases?source=post_page-----b774bf975061---------------------------------------#what_are_databases" target="_blank">
-    <p style='color:#7c68ed'>Types of databases</p>
+    <p>Types of databases</p>
 </a>
 
 ## What is a DBMS ?
@@ -149,7 +149,7 @@ In order to make read faster, LSM systems keep up many tasks and workarounds lik
 So some probabilistic data structures like Bloom filters are used to get the idea if some data exists in a SSTable in constant time.
 
 <a href="https://systemdesign.one/bloom-filters-explained/" target="_blank">
-    <p style='color:#7c68ed'>Bloom Filters</p>
+    <p>Bloom Filters</p>
 </a>
 
 > Anything between B Tree & LSM Tree and give us okayish read write speed?
@@ -179,6 +179,6 @@ While reading, the operation has to consider all messages on its path in order t
 
 Congrats, you made it to the end! 🎉 Either you’re truly dedicated, incredibly bored, or just scrolling aimlessly through life—no judgment. Since this was reposted from my <span>
 <a href="https://medium.com/@akshatsonic/all-about-databases-b774bf975061" target="_blank">
-    <span style='color:#7c68ed'>Medium Blog</span>
+    <span>Medium Blog</span>
 </a>
 </span> , it might feel a little less spicy than usual. But hey, stick around—better, funnier, and possibly life-altering content is coming soon! (Or at least something mildly entertaining.) 😆

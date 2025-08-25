@@ -9,7 +9,7 @@ let recentPosts = posts.slice(posts.length-numberOfPostsToDisplay, posts.length)
 ---
 
 <div class="px-4 md:px-16 flex flex-col gap-4 mt-16">
-  <h1 class="font-bold text-2xl " style = 'color:#7c68ed'>Recent Publications</h1><br/>
+  <h1 class="font-bold text-2xl " style = 'color:#a7c1a8'>Recent Publications</h1><br/>
   {
     recentPosts.length === 0 ? (
       <p>Nothing published yet</p>
@@ -33,14 +33,14 @@ let recentPosts = posts.slice(posts.length-numberOfPostsToDisplay, posts.length)
           <img
             src={post.data.heroImage}
             alt=""
-            class="w-40 h-24 object-cover border border-gray-200"
+            class="w-40 h-24 object-cover border border-sage-200 dark:border-sage-600"
           />
         </a>
       </div>
     ))
   }
   <a
-    class="border flex justify-center items-center hover:no-underline hover:bg-gray-200 hover:border-gray-300 transition-colors ease-in-out bg-gray-100 w-full max-w-xs mx-auto mt-12 rounded-lg text-gray-700 text-xs h-8 font-medium border-gray-200 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-300 hover:dark:bg-neutral-700/50 hover:dark:border-neutral-600 hover:dark:text-neutral-100"
+    class="border flex justify-center items-center hover:no-underline hover:bg-sage-200 hover:border-sage-300 transition-colors ease-in-out bg-sage-100 w-full max-w-xs mx-auto mt-12 rounded-lg text-sage-700 text-xs h-8 font-medium border-sage-200 dark:bg-sage-800 dark:border-sage-600 dark:text-sage-200 hover:dark:bg-sage-700 hover:dark:border-sage-500 hover:dark:text-sage-100"
     href="/blog">View more</a
   >
 </div>
