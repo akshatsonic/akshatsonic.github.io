@@ -1,6 +1,21 @@
 html {
-    font-family: 'Courier', monospace;
+    font-family: "Faculty Glyphic", "Impact", "Arial Black", sans-serif;
+    font-weight: 400;
     width: 100%;
+    letter-spacing: 0.02em; /* Add slight spacing to prevent overlapping */
+}
+
+/* Faculty Glyphic Typography Styles - High weights for headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Faculty Glyphic", "Impact", "Arial Black", sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.05em; /* Increase spacing for heavy weight headings */
+    line-height: 1.2; /* Improve vertical spacing */
+}
+
+/* Code elements should use Fira Code monospace font */
+code, pre, kbd, samp {
+    font-family: "Fira Code", "JetBrains Mono", "Courier New", monospace;
 }
 
 a {

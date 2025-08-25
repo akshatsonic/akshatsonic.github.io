@@ -1,5 +1,32 @@
-// Theme Configuration - Single Source of Truth for All Colors
-// This file governs the entire website's color palette
+// Theme Configuration - Single Source of Truth for All Colors & Typography
+// This file governs the entire website's color palette and typography
+
+// Faculty Glyphic Font Configuration - Faculty Glyphic Everywhere
+export const facultyFonts = {
+  // Faculty Glyphic for headings - High weights for bold impact
+  heading: {
+    family: '"Faculty Glyphic", "Impact", "Arial Black", sans-serif',
+    weights: ['700', '800', '900'],
+    googleFont: 'Faculty+Glyphic:wght@700;800;900',
+  },
+  
+  // Faculty Glyphic for body text - Regular weight for readability
+  body: {
+    family: '"Faculty Glyphic", "Impact", "Arial Black", sans-serif', 
+    weights: ['400', '500'],
+    googleFont: 'Faculty+Glyphic:wght@400;500',
+  },
+  
+  // Monospace for code blocks
+  code: {
+    family: '"Fira Code", "JetBrains Mono", "Courier New", monospace',
+    weights: ['300', '400', '500', '600'],
+    googleFont: 'Fira+Code:wght@300;400;500;600',
+  },
+  
+  // Google Fonts URL for all fonts - Faculty Glyphic with multiple weights
+  googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Faculty+Glyphic:wght@400;500;700;800;900&family=Fira+Code:wght@300;400;500;600&display=swap',
+}
 
 export const themeColors = {
   // Sage Green Palette - Primary Theme Colors

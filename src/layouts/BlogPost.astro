@@ -69,18 +69,47 @@ img {
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-    color: var(--grey-900);
     margin-top: 24px;
     margin-bottom: 16px;
     font-weight: bold;
 }
 
-h1 { font-size: 32px; }
-h2 { font-size: 28px; }
-h3 { font-size: 24px; }
-h4 { font-size: 20px; }
-h5 { font-size: 18px; }
-h6 { font-size: 16px; }
+h1 { 
+    font-size: 32px; 
+    color: var(--grey-900);
+}
+
+h2 { 
+    font-size: 28px; 
+    color: ${themeColors.sage[400]};
+}
+
+h3 { 
+    font-size: 24px; 
+    color: ${themeColors.sage[500]};
+}
+
+h4 { 
+    font-size: 20px; 
+    color: ${themeColors.sage[600]};
+}
+
+h5 { 
+    font-size: 18px; 
+    color: ${themeColors.components.text.sage.light};
+}
+
+h6 { 
+    font-size: 16px; 
+    color: ${themeColors.components.text.sage.light};
+}
+
+/* Dark mode heading colors */
+.dark h2 { color: ${themeColors.sage[300]}; }
+.dark h3 { color: ${themeColors.sage[200]}; }
+.dark h4 { color: ${themeColors.primary}; }
+.dark h5 { color: ${themeColors.components.text.sage.dark}; }
+.dark h6 { color: ${themeColors.components.text.sage.dark}; }
 
 /* Paragraphs */
 p {
@@ -170,24 +199,24 @@ sub { bottom: -0.25em; }
 
 /* Headers - Remove any underlines and override any inherited styles */
 article h1, article h2, article h3, article h4, article h5, article h6,
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6,
+.text-5xl, .text-4xl, .text-3xl, .text-2xl, .text-xl, .text-lg {
     text-decoration: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
+    text-underline-offset: 0 !important;
 }
 
+article h1 *, article h2 *, article h3 *, article h4 *, article h5 *, article h6 *,
+h1 *, h2 *, h3 *, h4 *, h5 *, h6 *,
+.text-5xl *, .text-4xl *, .text-3xl *, .text-2xl *, .text-xl *, .text-lg *,
 article h1 a, article h2 a, article h3 a, article h4 a, article h5 a, article h6 a,
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     text-decoration: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
     color: inherit !important;
-}
-
-/* Ensure title specifically has no underlines */
-.text-5xl {
-    text-decoration: none !important;
-    border-bottom: none !important;
+    text-underline-offset: 0 !important;
 }
 
 /* Links - Using Centralized Theme Colors */
