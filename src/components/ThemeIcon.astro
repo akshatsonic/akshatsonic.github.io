@@ -1,119 +1,27 @@
 ---
-import { Icon } from 'astro-iconify'
-const props = Astro.props
 ---
 
-<style>
-  .pushable {
-    position: relative;
-    background: transparent;
-    padding: 0px;
-    border: none;
-    cursor: pointer;
-    outline-offset: 4px;
-    /* outline-color: deeppink; */
-    transition: filter 250ms;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
-  .shadow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    /* background: hsl(226, 25%, 69%); */
-    border-radius: 8px;
-    filter: blur(2px);
-    will-change: transform;
-    transform: translateY(2px);
-    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
-  }
-
-  .edge {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    border-radius: 8px;
-    background: linear-gradient(
-      to right,
-      #5a7369 0%,
-      #6b8a7f 8%,
-      #4a5f56 92%,
-      #334139 100%
-    );
-  }
-
-  .front {
-    display: block;
-    position: relative;
-    border-radius: 8px;
-    background: #819a91;
-    padding: 8px 12px;
-    color: white;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 1rem;
-    transform: translateY(-4px);
-    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
-  }
-
-  .pushable:hover {
-    filter: brightness(110%);
-  }
-
-  .pushable:hover .front {
-    transform: translateY(-6px);
-    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
-  }
-
-  .pushable:active .front {
-    transform: translateY(-2px);
-    transition: transform 34ms;
-  }
-
-  .pushable:hover .shadow {
-    transform: translateY(4px);
-    transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
-  }
-
-  .pushable:active .shadow {
-    transform: translateY(1px);
-    transition: transform 34ms;
-  }
-
-  .pushable:focus:not(:focus-visible) {
-    outline: none;
-  }
-</style>
-
-<button class={"switch-theme-button pushable " + props.class }>
-  <span class="shadow"></span>
-  <span class="edge"></span>
-  <span class="front">
-    <Icon name="radix-icons:sun" class="w-4 h-4 flex dark:hidden" />
-    <Icon name="radix-icons:moon" class="w-4 h-4 dark:flex hidden" />
-
-  </span>
+<button
+  id="theme-toggle"
+  class="w-7 h-7 flex items-center justify-center text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+  aria-label="Toggle theme"
+>
+  <svg class="w-4 h-4 dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+  </svg>
+  <svg class="w-4 h-4 hidden dark:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+  </svg>
 </button>
 
-<script >
-  // document.addEventListener('astro:page-load', () => {
-    const buttons = document.querySelectorAll('.switch-theme-button'); 
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      if (localStorage.theme === 'dark') {
-        localStorage.theme = 'light';
-        document.documentElement.classList.remove('dark');
-      } else {
-        localStorage.theme = 'dark';
-        document.documentElement.classList.add('dark');
-      }
-    })
+<script>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    if (localStorage.theme === 'dark') {
+      localStorage.theme = 'light';
+      document.documentElement.classList.remove('dark');
+    } else {
+      localStorage.theme = 'dark';
+      document.documentElement.classList.add('dark');
+    }
   });
-// });
-  
 </script>

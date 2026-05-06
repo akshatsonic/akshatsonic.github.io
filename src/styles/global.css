@@ -1,45 +1,46 @@
 html {
-    font-family: "Faculty Glyphic", "Impact", "Arial Black", sans-serif;
-    font-weight: 400;
-    width: 100%;
-    letter-spacing: 0.02em; /* Add slight spacing to prevent overlapping */
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  background-color: #f9faf6;
 }
 
-/* Faculty Glyphic Typography Styles - High weights for headings */
+html.dark {
+  background-color: #1a2520;
+}
+
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Faculty Glyphic", "Impact", "Arial Black", sans-serif;
-    font-weight: 800;
-    letter-spacing: 0.05em; /* Increase spacing for heavy weight headings */
-    line-height: 1.2; /* Improve vertical spacing */
-}
-
-/* Code elements should use Fira Code monospace font */
-code, pre, kbd, samp {
-    font-family: "Fira Code", "JetBrains Mono", "Courier New", monospace;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* Ensure headers never get underlined */
-h1, h2, h3, h4, h5, h6 {
-    text-decoration: none !important;
-    border-bottom: none !important;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-decoration: none !important;
+  border-bottom: none !important;
 }
 
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-    text-decoration: none !important;
-    border-bottom: none !important;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+code, pre, kbd, samp {
+  font-family: "Fira Code", "JetBrains Mono", "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 img {
-    @apply rounded-lg;
-    max-width: 100%;
-    height: auto;
+  @apply rounded-md;
+  max-width: 100%;
+  height: auto;
 }

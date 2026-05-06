@@ -11,37 +11,22 @@ import RecentPublications from "../components/RecentPublications.astro";
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body class="w-full max-w-screen-md mx-auto my-4 bg-sage-100 dark:bg-sage-900 dark:text-sage-100 transition-colors duration-300" >
+  <body class="max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <Header />
-    <main class="flex flex-col justify-center">
-      <div class="px-4 md:px-16 flex flex-col gap-4 md:my-10">
-        <h1 class="text-2xl md:text-5xl w-full">It Works on My Blog!</h1>
-        <p class="w-full text-justify text-base md:text-lg">
-          Hey there, fellow code wrangler! 👨‍💻👩‍💻 If you’ve ever stared at a bug for hours, only to realize you forgot a semicolon, or deployed something that worked perfectly on localhost but turned into a dumpster fire in production, well then congratulations, you’re in the right place! 🎉
+    <main>
+      <section class="mb-4">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight font-heading">
+          It Works on My Blog!
+        </h1>
+        <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+          Hey, I'm <strong class="text-gray-900 dark:text-gray-100 font-medium">Akshat Soni</strong>, a backend engineer who spends his days building distributed systems, arguing with databases, and occasionally shipping things that survive production.
         </p>
-        
-         <p class="w-full text-justify text-base md:text-lg">
-          Expect deep dives into tech, some questionable analogies, and the occasional existential crisis about why <i>null</i> even exists. Oh, and if you don’t laugh at least once per blog post, I’ll personally refund your reading time (terms and conditions apply, aka: I won’t).
+        <p class="text-base text-gray-500 dark:text-gray-500 leading-relaxed">
+          This is where I write about the things I learn, break, and figure out. No fluff, no corporate speak. Just honest notes from someone in the trenches.
         </p>
-        <p class="w-full text-justify text-base md:text-lg">
-          So grab a coffee, brace yourself for some top-tier tech ramblings, and remember: <strong style = 'color:#819a91'>if it works on your machine, it probably won't work anywhere else.</strong> 💁
-        </p>
-      </div>
-      <div class="w-full flex flex-col items-center gap-2.5 px-4 lg:px-0 mt-6">
-        <img
-          src="https://images.pexels.com/photos/31206896/pexels-photo-31206896.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-          alt="Astronaut"
-        />
-        <p class="italic text-xs text-gray-600 dark:text-neutral-400">
-          Photo by <a
-            href="https://www.instagram.com/akshatsonic/"
-            >Myself :hehe:</a
-          >
-        </p>
-      </div>
-	  <RecentPublications />
-	      </main>
+      </section>
+      <RecentPublications />
+    </main>
     <Footer />
   </body>
 </html>
-

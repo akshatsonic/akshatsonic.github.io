@@ -1,46 +1,33 @@
 ---
 import { getCollection } from "astro:content";
-import FormattedDate from "./FormattedDate.astro";
-import TagLink from "./TagLink.astro";
 
 const posts = await getCollection("blog");
-let numberOfPostsToDisplay = 3;
-let recentPosts = posts.slice(posts.length-numberOfPostsToDisplay, posts.length).reverse();
+const recentPosts = posts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
 ---
 
-<div class="px-4 md:px-16 flex flex-col gap-4 mt-16">
-  <h1 class="font-bold text-2xl " style = 'color:#a7c1a8'>Recent Publications</h1><br/>
-  {
-    recentPosts.length === 0 ? (
-      <p>Nothing published yet</p>
-    ) :
-    recentPosts.map((post) => (
-      <div class="flex gap-2 justify-between border-b pb-4">
-        <div class="flex flex-col gap-4">
-          {/* <p>{post.data.pubDate}</p> */}
-          <FormattedDate date={post.data.pubDate} />
-          <a class="font-bold text-lg" href={`/blog/${post.slug}`}>
-            {post.data.title}
-          </a>
-          <p class="text-gray-500 dark:text-neutral-400 text-xs font-medium">{post.data.description}</p>
-          <div class="flex gap-2">
-              {post.data.tags?.map((i) => {
-                return <TagLink tag={i} />;
-              })}
-          </div>
-        </div>
-        <a href={`/blog/${post.slug}`}>
-          <img
-            src={post.data.heroImage}
-            alt=""
-            class="w-40 h-24 object-cover border border-sage-200 dark:border-sage-600"
-          />
+<section class="mt-16">
+  <h2 class="text-xs font-semibold tracking-widest uppercase text-gray-400 dark:text-gray-500 mb-6 font-sans">Recent Writing</h2>
+  <ul class="flex flex-col divide-y divide-sage-200 dark:divide-sage-800">
+    {recentPosts.map((post) => (
+      <li class="py-3.5 flex items-baseline gap-6">
+        <span class="text-xs text-gray-400 dark:text-gray-500 tabular-nums shrink-0 w-24">
+          {post.data.pubDate.toLocaleDateString('en-us', { month: 'short', day: 'numeric', year: 'numeric' })}
+        </span>
+        <a
+          href={`/blog/${post.slug}`}
+          class="text-gray-900 dark:text-gray-100 hover:text-sage-600 dark:hover:text-sage-400 transition-colors"
+        >
+          {post.data.title}
         </a>
-      </div>
-    ))
-  }
+      </li>
+    ))}
+  </ul>
   <a
-    class="border flex justify-center items-center hover:no-underline hover:bg-sage-200 hover:border-sage-300 transition-colors ease-in-out bg-sage-100 w-full max-w-xs mx-auto mt-12 rounded-lg text-sage-700 text-xs h-8 font-medium border-sage-200 dark:bg-sage-800 dark:border-sage-600 dark:text-sage-200 hover:dark:bg-sage-700 hover:dark:border-sage-500 hover:dark:text-sage-100"
-    href="/blog">View more</a
+    href="/blog"
+    class="inline-block mt-8 text-sm text-sage-600 dark:text-sage-400 hover:underline hover:text-sage-700 dark:hover:text-sage-300"
   >
-</div>
+    All posts →
+  </a>
+</section>

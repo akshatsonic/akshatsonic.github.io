@@ -3,35 +3,41 @@ import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-);
-const tags =  posts.flatMap(post => post.data.tags).filter((tag, index, self) => self.indexOf(tag) === index);
+const posts = await getCollection("blog");
+const tagCounts: { [tag: string]: number } = {};
+
+posts.forEach((post) => {
+  post.data.tags?.forEach((tag) => {
+    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+  });
+});
+
+const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
 ---
 
 <!doctype html>
-<html lang="en" class="min-h-dvh">
+<html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title="Tags · akshatsonic" description="Browse posts by topic." />
   </head>
-  <body class="w-full flex flex-col mx-auto max-w-screen-md min-h-dvh justify-between bg-sage-100 dark:bg-sage-900 dark:text-sage-100 transition-colors duration-300">
+  <body class="max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <Header />
-    <main
-      class="w-full max-w-screen-md mx-auto my-4 flex flex-col gap-4 justify-center px-4"
-    >
-
-        <ul class="flex flex-wrap gap-2">
-            {tags.map(tag => (
-                <li>
-                    <a href={`/tags/${tag}`} class=" p-1 rounded-md">
-                        #{tag}
-                    </a>
-                </li>
-            ))}
-        </ul>
-     
+    <main>
+      <h1 class="text-4xl font-bold mb-12 font-heading">Tags</h1>
+      <ul class="flex flex-wrap gap-3">
+        {tags.map(([tag, count]) => (
+          <li>
+            <a
+              href={`/tags/${tag}`}
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-sage-200 dark:border-sage-800 text-gray-600 dark:text-gray-400 hover:border-sage-400 dark:hover:border-sage-600 hover:text-sage-700 dark:hover:text-sage-300 transition-colors"
+            >
+              #{tag}
+              <span class="text-xs text-gray-400 dark:text-gray-600">{count}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </main>
     <Footer />
   </body>

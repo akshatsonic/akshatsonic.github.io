@@ -2,152 +2,19 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-
-const title = "Are you lost buddy?";
-const heroImage ="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXdvZTZ1a2RjN3VzMzdoM2poMXM2bnVtZzRnajdiOHJ6eXIzaXJudCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gioXyl9A3eiObmtwKZ/giphy.gif"
-const description = "You seem to be lost in the void of the internet. Let's get you back to safety!";
 ---
 
-<html lang="en" class="dark">
+<html lang="en">
   <head>
-    <BaseHead title={title} description={description} image={heroImage}/>
+    <BaseHead title="404 — Page not found" description="This page doesn't exist." />
   </head>
-  <body class="w-full max-w-screen-md mx-auto my-4 bg-sage-100 dark:bg-sage-900 dark:text-sage-100 transition-colors duration-300">
+  <body class="max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <Header />
-    <main>
-      <article class="px-4">
-        <h1 class="text-5xl mb-8">
-          {title}
-        </h1>
-        <div class="w-full flex flex-col items-center gap-2.5 px-4 lg:px-0 mt-6">
-            {
-              heroImage && (
-                <img width={1020} height={510} src={heroImage} alt="" />
-                <p class="italic text-xs text-gray-600 dark:text-neutral-400"></p>
-              )
-            }
-          </div>
-        <div class="mt-10">
-          <slot />
-        </div>
-      </article>
+    <main class="flex flex-col items-start gap-4 mt-16">
+      <h1 class="text-6xl font-bold font-heading text-sage-300 dark:text-sage-700">404</h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400">This page doesn't exist.</p>
+      <a href="/" class="mt-4 text-sm text-sage-600 dark:text-sage-400 hover:underline">← Back home</a>
     </main>
     <Footer />
   </body>
-
-  <style is:inline>
-    /* Base Styles */
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 20px 0;
-}
-
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-    color: var(--grey-900);
-    margin-top: 24px;
-    margin-bottom: 16px;
-    font-weight: bold;
-}
-
-h1 { font-size: 32px; }
-h2 { font-size: 28px; }
-h3 { font-size: 24px; }
-h4 { font-size: 20px; }
-h5 { font-size: 18px; }
-h6 { font-size: 16px; }
-
-/* Paragraphs */
-p {
-    margin-top: 0;
-    margin-bottom: 16px;
-}
-
-/* Blockquotes */
-blockquote {
-    border-left: 4px solid #ccc;
-    padding: 10px 20px;
-    margin: 20px 0;
-    color: #666;
-    background-color: #f9f9f9;
-    @apply dark:bg-neutral-700 text-white border-l-4 border-neutral-500; 
-}
-
-/* Code Blocks and Inline Code */
-
-pre {
-    padding: 10px;
-    overflow-x: auto;
-    margin-top: 0;
-    margin-bottom: 16px;
-}
-
-code {
-    padding: 2px 4px;
-    font-family: 'Courier New', monospace;
-    font-size: 90%;
-}
-
-/* Tables */
-table {
-    width: 100%;
-    margin-bottom: 20px;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 8px;
-    border: 1px solid #ddd;
-}
-
-th {
-    background-color: #f4f4f4;
-    @apply dark:bg-neutral-700;
-}
-
-/* Lists */
-.footnotes ul, ol {
-    margin-top: 0;
-    margin-bottom: 16px;
-    padding-left: 20px;
-    list-style: outside;
-}
-
-/* Special HTML Tags */
-abbr {
-    border-bottom: 1px dotted #666;
-    cursor: help;
-}
-
-kbd {
-    padding: 2px 4px;
-    font-size: 90%;
-    color: #fff;
-    background-color: #333;
-    border-radius: 3px;
-}
-
-mark {
-    background-color: yellow;
-    color: black;
-}
-
-sup, sub {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-}
-
-sup { top: -0.5em; }
-sub { bottom: -0.25em; }
-
-
-
-
-</style>
-
-
-  </html>
+</html>

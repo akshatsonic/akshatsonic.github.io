@@ -3,8 +3,6 @@ import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import TagLink from "../components/TagLink.astro";
 import { themeColors } from "../theme.js";
 
 type Props = CollectionEntry<"blog">["data"];
@@ -12,230 +10,161 @@ type Props = CollectionEntry<"blog">["data"];
 const { title, description, pubDate, heroImage, heroImageTitle, tags, readTime } = Astro.props;
 ---
 
-<html lang="en" class="dark">
+<html lang="en">
   <head>
-    <BaseHead title={title} description={description} image={heroImage}/>
+    <BaseHead title={title} description={description} image={heroImage} />
   </head>
-  <body class="w-full max-w-screen-md mx-auto my-4 bg-sage-100 dark:bg-sage-900 dark:text-sage-100 transition-colors duration-300">
+  <body class="max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <Header />
     <main>
-      <article class="px-4">
-        <div class="flex justify-between mb-6">
-          <FormattedDate date={pubDate} />
-          <p class="text-gray-500 dark:text-neutral-400 text-xs font-medium tracking-wide">
-            {readTime} read
-          </p>
+      <article>
+        <div class="flex items-center justify-between mb-6 text-xs text-gray-400 dark:text-gray-500 font-sans tracking-wide">
+          <time datetime={pubDate.toISOString()}>
+            {pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+          {readTime && <span>{readTime} read</span>}
         </div>
-        <h1 class="text-5xl mb-8">
-          {title}
-        </h1>
-        <div class="w-full flex flex-col items-center gap-2.5 px-4 lg:px-0 mt-6">
-          {
-            heroImage && (
-              <img width={1020} height={510} src={heroImage} alt="" />
-              <p class="italic text-xs text-gray-600 dark:text-neutral-400" set:html={heroImageTitle}></p>
-            )
-          }
-        </div>
-        <div class="mt-10">
+
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-8 font-heading">{title}</h1>
+
+        {heroImage && (
+          <figure class="my-8">
+            <img src={heroImage} alt={title} class="w-full rounded-lg" />
+            {heroImageTitle && (
+              <figcaption class="text-center text-xs text-gray-400 mt-2 italic" set:html={heroImageTitle} />
+            )}
+          </figure>
+        )}
+
+        <div class="prose-content mt-8">
           <slot />
         </div>
-        <div>
-          {
-            tags && (
-                <ul class="flex gap-2">
-                  {tags.map((tag) => (
-                    <li>
-                      <TagLink tag={tag} />
-                    </li>
-                  ))}
-                </ul>
-            )
-          }
-        </div>
+
+        {tags && tags.length > 0 && (
+          <div class="flex gap-3 flex-wrap mt-12 pt-6 border-t border-sage-200 dark:border-sage-800">
+            {tags.map((tag) => (
+              <a href={`/tags/${tag}`} class="text-xs text-sage-600 dark:text-sage-400 hover:underline">#{tag}</a>
+            ))}
+          </div>
+        )}
       </article>
     </main>
     <Footer />
   </body>
 
   <style is:inline>
-    /* Base Styles */
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 20px 0;
-}
+    .prose-content {
+      line-height: 1.85;
+      font-size: 1.0625rem;
+    }
 
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-    margin-top: 24px;
-    margin-bottom: 16px;
-    font-weight: bold;
-}
+    .prose-content h2 {
+      font-size: 1.5rem;
+      margin-top: 2.5em;
+      margin-bottom: 0.75em;
+      color: #547257;
+    }
+    .prose-content h3 {
+      font-size: 1.25rem;
+      margin-top: 2em;
+      margin-bottom: 0.6em;
+      color: #547257;
+    }
+    .prose-content h4 {
+      font-size: 1.1rem;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      color: #6b906d;
+    }
 
-h1 { 
-    font-size: 32px; 
-    color: var(--grey-900);
-}
+    .dark .prose-content h2 { color: #8aab87; }
+    .dark .prose-content h3 { color: #8aab87; }
+    .dark .prose-content h4 { color: #8aab87; }
 
-h2 { 
-    font-size: 28px; 
-    color: ${themeColors.sage[400]};
-}
+    .prose-content p { margin-bottom: 1.35em; }
 
-h3 { 
-    font-size: 24px; 
-    color: ${themeColors.sage[500]};
-}
+    .prose-content a {
+      color: #547257;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .dark .prose-content a { color: #8aab87; }
+    .prose-content a:hover { text-decoration: none; }
 
-h4 { 
-    font-size: 20px; 
-    color: ${themeColors.sage[600]};
-}
+    .prose-content ul,
+    .prose-content ol {
+      margin-bottom: 1.35em;
+      padding-left: 1.5em;
+    }
+    .prose-content ul { list-style: disc; }
+    .prose-content ol { list-style: decimal; }
+    .prose-content li { margin-bottom: 0.4em; }
 
-h5 { 
-    font-size: 18px; 
-    color: ${themeColors.components.text.sage.light};
-}
+    .prose-content blockquote {
+      border-left: 3px solid #547257;
+      padding: 0.5em 1.25em;
+      margin: 1.75em 0;
+      color: #6b7280;
+      font-style: italic;
+    }
+    .dark .prose-content blockquote {
+      border-left-color: #8aab87;
+      color: #9ca3af;
+    }
 
-h6 { 
-    font-size: 16px; 
-    color: ${themeColors.components.text.sage.light};
-}
+    .prose-content pre {
+      padding: 1.25em;
+      overflow-x: auto;
+      margin: 1.75em 0;
+      border-radius: 0.5em;
+    }
 
-/* Dark mode heading colors */
-.dark h2 { color: ${themeColors.sage[300]}; }
-.dark h3 { color: ${themeColors.sage[200]}; }
-.dark h4 { color: ${themeColors.primary}; }
-.dark h5 { color: ${themeColors.components.text.sage.dark}; }
-.dark h6 { color: ${themeColors.components.text.sage.dark}; }
+    .prose-content code:not(pre code) {
+      background: #f1f3ec;
+      padding: 0.15em 0.4em;
+      border-radius: 0.25em;
+      font-size: 0.875em;
+    }
+    .dark .prose-content code:not(pre code) {
+      background: #2b3c2e;
+    }
 
-/* Paragraphs */
-p {
-    margin-top: 0;
-    margin-bottom: 16px;
-}
+    .prose-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.75em 0;
+      font-size: 0.9375rem;
+    }
+    .prose-content th,
+    .prose-content td {
+      padding: 0.5em 0.75em;
+      border: 1px solid #dde3d1;
+      text-align: left;
+    }
+    .dark .prose-content th,
+    .dark .prose-content td { border-color: #435c47; }
+    .prose-content th {
+      background: #f1f3ec;
+      font-weight: 600;
+    }
+    .dark .prose-content th { background: #2b3c2e; }
 
-/* Blockquotes */
-blockquote {
-    border-left: 4px solid ${themeColors.components.border.light};
-    padding: 10px 20px;
-    margin: 20px 0;
-    color: ${themeColors.components.text.sage.light};
-    background-color: ${themeColors.background.cream};
-    @apply dark:bg-sage-800 dark:text-sage-100 border-l-4 border-sage-300; 
-}
+    .prose-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5em;
+      margin: 1.5em 0;
+    }
 
-/* Code Blocks and Inline Code */
-
-pre {
-    padding: 10px;
-    overflow-x: auto;
-    margin-top: 0;
-    margin-bottom: 16px;
-}
-
-code {
-    padding: 2px 4px;
-    font-family: 'Courier New', monospace;
-    font-size: 90%;
-}
-
-/* Tables */
-table {
-    width: 100%;
-    margin-bottom: 20px;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 8px;
-    border: 1px solid ${themeColors.components.border.light};
-    @apply dark:border-sage-600;
-}
-
-th {
-    background-color: ${themeColors.sage[200]};
-    @apply dark:bg-sage-700;
-}
-
-/* Lists */
-.footnotes ul, ol {
-    margin-top: 0;
-    margin-bottom: 16px;
-    padding-left: 20px;
-    list-style: outside;
-}
-
-/* Special HTML Tags */
-abbr {
-    border-bottom: 1px dotted #666;
-    cursor: help;
-}
-
-kbd {
-    padding: 2px 4px;
-    font-size: 90%;
-    color: #fff;
-    background-color: #333;
-    border-radius: 3px;
-}
-
-mark {
-    background-color: yellow;
-    color: black;
-}
-
-sup, sub {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-}
-
-sup { top: -0.5em; }
-sub { bottom: -0.25em; }
-
-/* Headers - Remove any underlines and override any inherited styles */
-article h1, article h2, article h3, article h4, article h5, article h6,
-h1, h2, h3, h4, h5, h6,
-.text-5xl, .text-4xl, .text-3xl, .text-2xl, .text-xl, .text-lg {
-    text-decoration: none !important;
-    border-bottom: none !important;
-    box-shadow: none !important;
-    text-underline-offset: 0 !important;
-}
-
-article h1 *, article h2 *, article h3 *, article h4 *, article h5 *, article h6 *,
-h1 *, h2 *, h3 *, h4 *, h5 *, h6 *,
-.text-5xl *, .text-4xl *, .text-3xl *, .text-2xl *, .text-xl *, .text-lg *,
-article h1 a, article h2 a, article h3 a, article h4 a, article h5 a, article h6 a,
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-    text-decoration: none !important;
-    border-bottom: none !important;
-    box-shadow: none !important;
-    color: inherit !important;
-    text-underline-offset: 0 !important;
-}
-
-/* Links - Using Centralized Theme Colors */
-a {
-    color: #819a91 !important;
-    text-decoration: underline;
-    transition: color 0.2s ease;
-}
-
-a:hover {
-    color: #6b8a7f !important;
-}
-
-.dark a {
-    color: #a7c1a8 !important;
-}
-
-.dark a:hover {
-    color: #d1d8be !important;
-}
-
-</style>
+    /* Headings never get underlines */
+    h1, h2, h3, h4, h5, h6,
+    .prose-content h1, .prose-content h2, .prose-content h3,
+    .prose-content h4, .prose-content h5, .prose-content h6 {
+      text-decoration: none !important;
+    }
+    h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+      text-decoration: none !important;
+      color: inherit !important;
+    }
+  </style>
+</html>
