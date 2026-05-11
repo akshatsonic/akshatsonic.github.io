@@ -1,0 +1,95 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "akshatsonic" [ref=e3] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e4]:
+      - link "About" [ref=e5] [cursor=pointer]:
+        - /url: /about
+      - link "Writing" [ref=e6] [cursor=pointer]:
+        - /url: /blog
+      - link "Tags" [ref=e7] [cursor=pointer]:
+        - /url: /tags
+      - button "Toggle theme" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+  - main [ref=e11]:
+    - heading "Writing" [level=1] [ref=e12]
+    - generic [ref=e13]:
+      - heading "2025" [level=2] [ref=e14]
+      - list [ref=e15]:
+        - listitem [ref=e16]:
+          - generic [ref=e17]: Aug 23
+          - generic [ref=e18]:
+            - link "Notes | Load Balancing Orchestration using K8s and AWS" [ref=e19] [cursor=pointer]:
+              - /url: /blog/202508230934-lb-elb-alb-k8s
+            - generic [ref=e20]:
+              - link "#backend" [ref=e21] [cursor=pointer]:
+                - /url: /tags/backend
+              - link "#devops" [ref=e22] [cursor=pointer]:
+                - /url: /tags/devops
+        - listitem [ref=e23]:
+          - generic [ref=e24]: Jun 16
+          - generic [ref=e25]:
+            - link "Part 1 | JVM Series | Memory" [ref=e26] [cursor=pointer]:
+              - /url: /blog/202506160152-jvm-part-1
+            - generic [ref=e27]:
+              - link "#backend" [ref=e28] [cursor=pointer]:
+                - /url: /tags/backend
+              - link "#java" [ref=e29] [cursor=pointer]:
+                - /url: /tags/java
+        - listitem [ref=e30]:
+          - generic [ref=e31]: Apr 24
+          - generic [ref=e32]:
+            - 'link "Reactive Programming : How I see it ?" [ref=e33] [cursor=pointer]':
+              - /url: /blog/202504242303-reactive-programming
+            - generic [ref=e34]:
+              - link "#spring" [ref=e35] [cursor=pointer]:
+                - /url: /tags/spring
+              - link "#backend" [ref=e36] [cursor=pointer]:
+                - /url: /tags/backend
+              - link "#java" [ref=e37] [cursor=pointer]:
+                - /url: /tags/java
+        - listitem [ref=e38]:
+          - generic [ref=e39]: Mar 25
+          - generic [ref=e40]:
+            - link "Be Hungry !!!" [ref=e41] [cursor=pointer]:
+              - /url: /blog/202503250131-be-hungry
+            - generic [ref=e42]:
+              - link "#self_help" [ref=e43] [cursor=pointer]:
+                - /url: /tags/self_help
+              - link "#productivity" [ref=e44] [cursor=pointer]:
+                - /url: /tags/productivity
+        - listitem [ref=e45]:
+          - generic [ref=e46]: Mar 20
+          - generic [ref=e47]:
+            - link "All about databases" [ref=e48] [cursor=pointer]:
+              - /url: /blog/202503200639-all-about-databases
+            - generic [ref=e49]:
+              - link "#database" [ref=e50] [cursor=pointer]:
+                - /url: /tags/database
+              - link "#backend" [ref=e51] [cursor=pointer]:
+                - /url: /tags/backend
+  - contentinfo [ref=e52]:
+    - generic [ref=e53]:
+      - paragraph [ref=e54]: © 2026 Akshat Soni
+      - generic [ref=e55]:
+        - link "LinkedIn" [ref=e56] [cursor=pointer]:
+          - /url: https://linkedin.com/in/akshatsoni
+        - link "GitHub" [ref=e57] [cursor=pointer]:
+          - /url: https://github.com/akshatsonic
+        - link "Twitter" [ref=e58] [cursor=pointer]:
+          - /url: https://x.com/akshatsonic
+        - link "Instagram" [ref=e59] [cursor=pointer]:
+          - /url: https://instagram.com/akshatsonic
+  - generic [ref=e62]:
+    - button "Menu" [ref=e63]:
+      - img [ref=e65]
+      - generic: Menu
+    - button "Inspect" [ref=e69]:
+      - img [ref=e71]
+      - generic: Inspect
+    - button "Audit" [ref=e73]:
+      - img [ref=e75]
+      - generic: Audit
+    - button "Settings" [ref=e78]:
+      - img [ref=e80]
+      - generic: Settings

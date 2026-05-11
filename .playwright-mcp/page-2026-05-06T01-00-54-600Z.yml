@@ -1,0 +1,64 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "akshatsonic" [ref=e3] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e4]:
+      - link "About" [ref=e5] [cursor=pointer]:
+        - /url: /about
+      - link "Writing" [ref=e6] [cursor=pointer]:
+        - /url: /blog
+      - link "Tags" [ref=e7] [cursor=pointer]:
+        - /url: /tags
+      - button "Toggle theme" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+  - main [ref=e11]:
+    - article [ref=e12]:
+      - generic [ref=e13]:
+        - time [ref=e14]: March 18, 2025
+        - generic [ref=e15]: 1 min read
+      - heading "About" [level=1] [ref=e16]
+      - figure [ref=e17]:
+        - img "About" [ref=e18]
+      - generic [ref=e19]:
+        - paragraph [ref=e20]:
+          - text: I'm
+          - strong [ref=e21]: Akshat Soni
+          - text: ", a backend engineer based in India. I spend most of my time thinking about how systems fail, why databases make the choices they do, and what it takes to build software that actually holds up under pressure."
+        - paragraph [ref=e22]: This blog is my thinking-out-loud space. I write when something clicks or when I've been confused long enough that writing it down is the only way to make sense of it. Topics drift around backend systems, cloud infrastructure, distributed computing, and the occasional career or mindset piece.
+        - paragraph [ref=e23]: Outside of engineering, I shoot film photography. There's something about the constraint of 36 frames that teaches patience in a way that unlimited cloud storage never will.
+        - paragraph [ref=e24]:
+          - text: You can find me on
+          - link "GitHub" [ref=e25] [cursor=pointer]:
+            - /url: https://github.com/akshatsonic
+          - text: ","
+          - link "LinkedIn" [ref=e26] [cursor=pointer]:
+            - /url: https://linkedin.com/in/akshatsoni
+          - text: ", or"
+          - link "Twitter" [ref=e27] [cursor=pointer]:
+            - /url: https://x.com/akshatsonic
+          - text: . I'm always happy to talk shop.
+  - contentinfo [ref=e28]:
+    - generic [ref=e29]:
+      - paragraph [ref=e30]: © 2026 Akshat Soni
+      - generic [ref=e31]:
+        - link "LinkedIn" [ref=e32] [cursor=pointer]:
+          - /url: https://linkedin.com/in/akshatsoni
+        - link "GitHub" [ref=e33] [cursor=pointer]:
+          - /url: https://github.com/akshatsonic
+        - link "Twitter" [ref=e34] [cursor=pointer]:
+          - /url: https://x.com/akshatsonic
+        - link "Instagram" [ref=e35] [cursor=pointer]:
+          - /url: https://instagram.com/akshatsonic
+  - generic [ref=e38]:
+    - button "Menu" [ref=e39]:
+      - img [ref=e41]
+      - generic: Menu
+    - button "Inspect" [ref=e45]:
+      - img [ref=e47]
+      - generic: Inspect
+    - button "Audit" [ref=e49]:
+      - img [ref=e51]
+      - generic: Audit
+    - button "Settings" [ref=e54]:
+      - img [ref=e56]
+      - generic: Settings

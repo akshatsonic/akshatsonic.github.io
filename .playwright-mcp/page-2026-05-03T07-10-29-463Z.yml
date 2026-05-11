@@ -1,0 +1,156 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "Kailash Nadh's personal homepage" [ref=e5] [cursor=pointer]:
+        - /url: https://nadh.in/
+        - img "Kailash Nadh's personal homepage" [ref=e6]
+      - navigation [ref=e7]:
+        - link "Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "Projects" [ref=e9] [cursor=pointer]:
+          - /url: /work
+        - link "Research" [ref=e10] [cursor=pointer]:
+          - /url: /research
+        - link "Blog" [ref=e11] [cursor=pointer]:
+          - /url: /blog
+        - link "Releases" [ref=e12] [cursor=pointer]:
+          - /url: /releases
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - heading "Developer / Tinkerer / Absurdist" [level=2] [ref=e15]
+        - img "Photo of Kailash Nadh" [ref=e17]
+        - generic [ref=e18]:
+          - paragraph [ref=e19]: I am a hobbyist software developer and a tinkerer.
+          - paragraph [ref=e20]: For a brief period, I was in the academia—at the Middlesex University, London—doing research, from where I obtained a BSc. in Computer Science (2008) and a PhD in Artificial Intelligence & Computational Linguistics (2011).
+          - paragraph [ref=e21]:
+            - text: In 2013, I started the tech team at
+            - link "Zerodha" [ref=e22] [cursor=pointer]:
+              - /url: https://zerodha.com
+            - text: ", now India's largest stock broker, where I have been the CTO ever since. At Zerodha, we have an"
+            - link "unconventional team" [ref=e23] [cursor=pointer]:
+              - /url: https://zerodha.tech/blog/hello-world/
+            - text: and we work on interesting financial technology projects.
+          - paragraph [ref=e24]: "I volunteer at several non-profit organisations, including the following ones that I co-founded:"
+          - list [ref=e25]:
+            - listitem [ref=e26]:
+              - link "FOSS United Foundation" [ref=e27] [cursor=pointer]:
+                - /url: https://fossunited.org
+              - text: — started in 2020 to promote Free and Open Source Software communities and activities in India.
+            - listitem [ref=e28]:
+              - link "Rainmatter Foundation" [ref=e29] [cursor=pointer]:
+                - /url: https://rainmatter.org
+              - text: — started in 2020 to back initiatives and projects in India focusing on ecological preservation and climate change.
+            - listitem [ref=e30]:
+              - link "Indic Digital Archive Foundation" [ref=e31] [cursor=pointer]:
+                - /url: https://indicarchive.org
+              - text: — started in 2022. Works on Indic language computing projects and digital preservation of Indic language cultural artefacts such as books, publications, and documents.
+            - listitem [ref=e32]:
+              - link "Samagata Foundation" [ref=e33] [cursor=pointer]:
+                - /url: https://samagata.org
+              - text: — setup in 2023 with the aim of backing initiatives and projects that cut across science, culture, art, technology, and education with a specific focus on the creation of public commons, institutions, and community spaces.
+          - paragraph
+          - paragraph [ref=e34]: I identify strongly as an absurdist, a worldview that drives everything I do. I have a bleak view of the future thanks to human-made climate change, humanity's callous penchant for relentless extraction, environmental and ecological destruction, and its irrational hatred for fellow beings. And yet, somehow, I am not a dysfunctional pessimist.
+        - generic [ref=e35]:
+          - figure "Exmoor, England" [ref=e36]:
+            - img "Photo of a Pony in Exmoor, England" [ref=e37]
+            - generic [ref=e38]: Exmoor, England
+          - figure "Jaipur, India":
+            - img "Photo of a crow in Jaipur, India" [ref=e39]
+            - generic [ref=e40]: Jaipur, India
+          - figure "Somerset, England":
+            - img "Photo of clouds in Somerset, England" [ref=e41]
+            - generic [ref=e42]: Somerset, England
+          - figure "Sharjah, UAE":
+            - img "Photo of the moon in Sharjah, UAE" [ref=e43]
+            - generic [ref=e44]: Sharjah, UAE
+        - generic [ref=e45]:
+          - paragraph [ref=e46]:
+            - text: I discovered the idea of code sometime in 2000 after unexpectedly getting a personal computer. Starting with Perl and VB6, I have been going down the rabbithole ever since. These days, I mostly write programs in Go. I released my first big FOSS project in 2002—bMachine, a blogging platform. Some of my personal projects can be
+            - link "found here" [ref=e47] [cursor=pointer]:
+              - /url: work
+            - text: .
+          - paragraph [ref=e48]: This website first went online in 2001 and has since undergone numerous iterations. It has lived on F2S, Angelfire, Geocities, Netfirms, and other free webhosts of the yesteryear, whose names I have long forgotten.
+          - paragraph [ref=e49]: The period brings back intense bittersweet nostalgia—the discovery of code, the excitement of connecting to the world over dialup Internet, the gratification of relentless experimentation by trial and error. The heydey of guest books, web rings, CGI scripts, and Matt's FormMail. I loved every bit of it. I keep this website online as a reminder of that past.
+          - paragraph [ref=e50]: I am fortunate to be in a position where what I do every day is exactly what I have unconditionally enjoyed doing for more than 26 years now—writing software, tinkering, and experimenting.
+          - paragraph [ref=e51]:
+            - emphasis [ref=e52]: Last updated on 7th April 2024.
+            - text: I can be reached at
+            - link "kailash@nadh.in" [ref=e53] [cursor=pointer]:
+              - /url: mailto:kailash@nadh.in
+            - text: .
+      - generic [ref=e54]:
+        - heading "Blog posts" [level=2] [ref=e55]
+        - list [ref=e56]:
+          - listitem [ref=e57]:
+            - generic [ref=e58]: 30 Jan 2026
+            - link "Code is cheap. Show me the talk." [ref=e59] [cursor=pointer]:
+              - /url: /blog/code-is-cheap/
+          - listitem [ref=e60]:
+            - generic [ref=e61]: 19 May 2025
+            - link "MCP seems viral" [ref=e62] [cursor=pointer]:
+              - /url: /blog/mcp-seems-viral/
+          - listitem [ref=e63]:
+            - generic [ref=e64]: 29 Jan 2025
+            - link "DeepSeek, AI sovereignty, and India" [ref=e65] [cursor=pointer]:
+              - /url: /blog/deepseek-ai-sovereignty-india/
+          - listitem [ref=e66]:
+            - generic [ref=e67]: 02 Oct 2024
+            - link "Decentralised Open Indexes for Discovery (DOID)" [ref=e68] [cursor=pointer]:
+              - /url: /blog/decentralised-open-indexes/
+          - listitem [ref=e69]:
+            - generic [ref=e70]: 24 Jul 2024
+            - link "On software as an \"in-discipline\"" [ref=e71] [cursor=pointer]:
+              - /url: /blog/on-software-as-an-indiscipline/
+          - listitem [ref=e72]:
+            - generic [ref=e73]: 13 May 2023
+            - link "This time, it feels different" [ref=e74] [cursor=pointer]:
+              - /url: /blog/this-time-it-feels-different/
+          - listitem [ref=e75]:
+            - generic [ref=e76]: 15 Nov 2022
+            - link "But, aren't you folks web2?" [ref=e77] [cursor=pointer]:
+              - /url: /blog/web2-web3/
+          - listitem [ref=e78]:
+            - generic [ref=e79]: 22 Aug 2022
+            - link "The triangle of fulfilment" [ref=e80] [cursor=pointer]:
+              - /url: /blog/triangle-of-fulfilment/
+          - listitem [ref=e81]:
+            - generic [ref=e82]: 01 Aug 2022
+            - link "Reflections on IndiaFOSS 2.0" [ref=e83] [cursor=pointer]:
+              - /url: /blog/reflections-on-indiafoss-2022/
+          - listitem [ref=e84]:
+            - generic [ref=e85]: 02 Mar 2022
+            - link "FOMO? YAMO." [ref=e86] [cursor=pointer]:
+              - /url: /blog/fomo-yamo/
+          - listitem [ref=e87]:
+            - generic [ref=e88]: 12 Dec 2021
+            - link "\"Open source\" is not broken" [ref=e89] [cursor=pointer]:
+              - /url: /blog/open-source-is-not-broken/
+          - listitem [ref=e90]:
+            - generic [ref=e91]: 26 Nov 2021
+            - link "On \"Powered by AI / ML\" marketing" [ref=e92] [cursor=pointer]:
+              - /url: /blog/on-powered-by-ai-marketing/
+          - listitem [ref=e93]:
+            - generic [ref=e94]: 16 Oct 2021
+            - link "The Javascript \"ecosystem\" is a hot mess and so is software development in general" [ref=e95] [cursor=pointer]:
+              - /url: /blog/javascript-ecosystem-software-development-are-a-hot-mess/
+          - listitem [ref=e96]:
+            - generic [ref=e97]: 30 Jan 2021
+            - link "The \"Atmanirbharta\" of open source software" [ref=e98] [cursor=pointer]:
+              - /url: /blog/the-atmanirbhartha-of-open-source-software/
+          - listitem [ref=e99]:
+            - generic [ref=e100]: 18 Mar 2019
+            - link "The absurdity of clubbing AI with blockchain" [ref=e101] [cursor=pointer]:
+              - /url: /blog/the-absurdity-of-clubbing-ai-blockchain/
+          - listitem [ref=e102]:
+            - generic [ref=e103]: 26 Dec 2015
+            - 'link "Indian startups ecosystem: Fear of failure grounds our success story" [ref=e104] [cursor=pointer]':
+              - /url: /blog/fear-of-success-grounds-failure/
+          - listitem [ref=e105]:
+            - generic [ref=e106]: 18 Dec 2012
+            - link "Parallels" [ref=e107] [cursor=pointer]:
+              - /url: /blog/parallels/
+          - listitem [ref=e108]:
+            - generic [ref=e109]: 15 Aug 2012
+            - link "അണ്ണാരക്കണ്ണന്‍മാര്‍" [ref=e110] [cursor=pointer]:
+              - /url: /blog/%E0%B4%85%E0%B4%A3%E0%B5%8D%E0%B4%A3%E0%B4%BE%E0%B4%B0%E0%B4%95%E0%B5%8D%E0%B4%95%E0%B4%A3%E0%B5%8D%E0%B4%A3%E0%B4%A8%E0%B5%8D%E0%B4%AE%E0%B4%BE%E0%B4%B0%E0%B5%8D/
+  - contentinfo [ref=e111]: Kailash Nadh © 2001-2026.

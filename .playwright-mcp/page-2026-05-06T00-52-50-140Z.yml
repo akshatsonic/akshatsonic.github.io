@@ -1,0 +1,174 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "akshatsonic" [ref=e3] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e4]:
+      - link "About" [ref=e5] [cursor=pointer]:
+        - /url: /about
+      - link "Writing" [ref=e6] [cursor=pointer]:
+        - /url: /blog
+      - link "Tags" [ref=e7] [cursor=pointer]:
+        - /url: /tags
+      - button "Toggle theme" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+  - main [ref=e11]:
+    - article [ref=e12]:
+      - generic [ref=e13]:
+        - time [ref=e14]: March 20, 2025
+        - generic [ref=e15]: 7 min read
+      - heading "All about databases" [level=1] [ref=e16]
+      - figure "Photo by Victor Moriyama" [ref=e17]:
+        - img "All about databases" [ref=e18]
+        - generic [ref=e19]:
+          - text: Photo by
+          - link "Victor Moriyama" [ref=e20] [cursor=pointer]:
+            - /url: https://www.instagram.com/victormoriyama
+      - generic [ref=e21]:
+        - heading "What is a database?" [level=2] [ref=e22]
+        - paragraph [ref=e23]:
+          - text: Data → information, Base → platform
+          - text: A platform for storing data in a structured format for accessing, manipulation and analysis purposes.
+        - heading "Types" [level=2] [ref=e24]
+        - paragraph [ref=e25]:
+          - text: Will be pasting link here :)
+          - link:
+            - /url: https://www.simplilearn.com/tutorials/dbms-tutorial/what-are-various-types-of-databases?source=post_page-----b774bf975061---------------------------------------#what_are_databases
+        - paragraph [ref=e26]:
+          - link "Types of databases" [ref=e27] [cursor=pointer]:
+            - /url: https://www.simplilearn.com/tutorials/dbms-tutorial/what-are-various-types-of-databases?source=post_page-----b774bf975061---------------------------------------#what_are_databases
+        - link:
+          - /url: https://www.simplilearn.com/tutorials/dbms-tutorial/what-are-various-types-of-databases?source=post_page-----b774bf975061---------------------------------------#what_are_databases
+        - paragraph
+        - heading "What is a DBMS ?" [level=2] [ref=e28]
+        - paragraph [ref=e29]: Provides tools to enable users to perform CRUD operations, along with index management, data security, etc.
+        - paragraph [ref=e30]:
+          - img [ref=e31]
+        - heading "Relational DBMS" [level=3] [ref=e32]
+        - blockquote [ref=e33]:
+          - paragraph [ref=e34]: A type of database that stores and provides access to data points that are related to one another.
+        - paragraph [ref=e35]: Here the relational model means that logical structures (tables, views, indexes) are separate from physical storage.
+        - heading "How does database store data internally" [level=4] [ref=e36]
+        - paragraph [ref=e37]: Internal design strategies employed by databases to optimise operations, along with their advantages and disadvantages.
+        - paragraph [ref=e38]: Traditional relational databases store data in a B-Tree structures on disk, indexes are also maintained for this data in B-Tree format as well for faster access of data.
+        - heading "Disk Structure" [level=4] [ref=e39]
+        - paragraph [ref=e40]:
+          - img [ref=e41]
+          - img [ref=e42]
+        - text: Any block address on a disk can be represented using (Track no., Sector no.) . Each block is of 512 bytes (depending on manufacturer), and each byte is represented by offset.
+        - paragraph [ref=e43]:
+          - img [ref=e44]
+        - heading "How data is organised on the disk" [level=4] [ref=e45]
+        - paragraph [ref=e46]: Let each row size of the table is X bytes. No. of records per block = 512 / X
+        - paragraph [ref=e47]: If we have Y rows then => (X*Y / 512) blocks are required. If we access entire table then we need to traverse more blocks hence more time. Also if we search for a particular row then too we have to check at-most (X*Y / 512) blocks.
+        - paragraph [ref=e48]: We can reduce this time by adding indexes, which will in-turn have the block address of the record/row for which the column index is applied. For each row we will have entry inside index table.
+        - paragraph [ref=e49]:
+          - img [ref=e50]
+        - paragraph [ref=e51]:
+          - text: This index table
+          - strong [ref=e52]: (dense index)
+          - text: is also stored on the disk. How much space would index take? Let’s say Id has a bytes and pointer is of b bytes => (a+b) total bytes for one row, which is way less than X (size of one row in database).
+        - paragraph [ref=e53]: Hence for Y entries, blocks required for index table = (Y*(a+b))/512. Therefore now whenever we need to search at-most (Y*(a+b))/512 blocks would be traversed for index and 1 block for that key that is to be searched, therefore ((Y*(a+b))/512) +1 at-most blocks.
+        - heading "Multilevel Indexing" [level=4] [ref=e54]
+        - paragraph [ref=e55]: As the size of the table grows the index table would are require more blocks on the disk, this would increase search time in index itself. Solution → We can have index on the index table ( sorry :) ).
+        - paragraph [ref=e56]:
+          - text: Since the index table is stored in
+          - emphasis [ref=e57]:
+            - emphasis [ref=e58]: (Y
+            - text: (a+b))/512
+          - text: "* blocks, the new table pointer will point to which block the index would be present."
+        - paragraph [ref=e59]:
+          - img [ref=e60]
+        - paragraph [ref=e61]:
+          - text: This new index table would be
+          - strong [ref=e62]: sparse index
+          - text: (not all values are present). This can make your search really fast. We can go on to make more indexes on the index table resulting in a tree structure.
+        - paragraph [ref=e63]: Similar to binary search trees there are M-way search trees where keys are M-1 and at-most M children. Insertion is insufficient in M-way search tree which can result in maximum of N nodes for N keys. There are some rules on insertion in M-way search trees that are called B-trees.
+        - paragraph [ref=e64]: The rows we insert are leaf of B-tree. Index to these data in B Tree structure mostly in RAM to guarantee faster access to the original data. When the data is too large and RAM is out of space then database will read from the disk. Disk I/O is very costly, B Tree is a random read/write, in-place replacement, very compact & self balancing data structure which suffers from disk I/O limitation.
+        - paragraph [ref=e65]:
+          - img [ref=e66]
+        - paragraph [ref=e67]: If the block size is 16KB (MySQL), for read or write data to the database, a block of disk pages of size 16 KB will be fetched from the disk into RAM, it will get manipulated and then written back to disk again if required. As mentioned earlier, leaves of a B Tree reside at the same level, it takes O(logN) steps to search a data in B Tree ordered by primary key.
+        - paragraph [ref=e68]: However write operations are worse. You can write hardly 100 bytes/second in a random write fashion. Scaling read operations can often be straightforward depending on the specific use case, achieved through methods such as caching, implementing search indexes, or allocating additional memory. However, scaling write operations can be challenging. When dealing with the need to write or update large volumes of data within a database, relying solely on B-tree structures may prove inadequate.
+        - heading "LSM (Log Structured Merge Tree)" [level=2] [ref=e69]
+        - paragraph [ref=e70]: a.k.a. the secret sauce 🥫 behind NoSQL
+        - paragraph [ref=e71]: — In this system, unlike B Tree, there is no in-place replacement of data i.e; once data is written to some portion in the disk, it never gets modified.
+        - paragraph [ref=e72]: — It’s like logging the data sequentially somewhere. Hence the term ‘Log Structured’ comes into picture.
+        - heading "Hardware" [level=4] [ref=e73]
+        - paragraph [ref=e74]: — Traditional magnetic hard drives can write data upto 100 MB/second.
+        - paragraph [ref=e75]: — Modern SSD drives can write far more in a sequential manner.
+        - paragraph [ref=e76]: — In fact SSD drives have some internal parallelism mechanism where they can write 16 to 32 MB data together on itself at once.
+        - paragraph [ref=e77]: — LSM tree is very suitable match for SSD (Sequential write)
+        - paragraph [ref=e78]: Cassandra or any LSM system maintains one or more in-memory data structure.
+        - paragraph [ref=e79]: ( in the below image Memtable ) like self balancing trees
+        - paragraph [ref=e80]:
+          - img [ref=e81]
+        - paragraph [ref=e82]: When memtable contents exceed a configurable threshold, the memtable data is put in a queue to be flushed to disk.
+        - paragraph [ref=e83]: To flush the data, Cassandra writes sorted data to disk sequentially.
+        - paragraph [ref=e84]:
+          - img [ref=e85]
+          - img [ref=e86]
+        - blockquote [ref=e87]:
+          - paragraph [ref=e88]: SSTables are immutable
+        - paragraph [ref=e89]: LSM systems can maintain multiple such files on disk
+        - paragraph [ref=e90]: — If a data is not found in memtable, Cassandra needs to scan all the on-disk SSTables as the data may be scattered across all the SSTables.
+        - paragraph [ref=e91]: — Cassandra reads are slower than writes.
+        - paragraph [ref=e92]:
+          - emphasis [ref=e93]: Improvement?
+        - heading "Compaction" [level=3] [ref=e94]
+        - paragraph [ref=e95]: — LSM system runs compaction process continuously in the background to minimize number of such SSTables.
+        - paragraph [ref=e96]: — Applies merge sort on SSTables and writes the new sorted data in a new SSTable and deletes old SSTables.
+        - paragraph [ref=e97]:
+          - emphasis [ref=e98]: Sometimes compaction cannot keep up with the amount of data writes
+        - heading "Probabilistic Data Structures" [level=4] [ref=e99]
+        - paragraph [ref=e100]: In order to make read faster, LSM systems keep up many tasks and workarounds like Bloom filters
+        - paragraph [ref=e101]: So some probabilistic data structures like Bloom filters are used to get the idea if some data exists in a SSTable in constant time.
+        - link "Bloom Filters" [ref=e102] [cursor=pointer]:
+          - /url: https://systemdesign.one/bloom-filters-explained/
+          - paragraph [ref=e103]: Bloom Filters
+        - blockquote [ref=e104]:
+          - paragraph [ref=e105]: Anything between B Tree & LSM Tree and give us okayish read write speed?
+        - heading "Fractal tree" [level=4] [ref=e106]
+        - paragraph [ref=e107]: — Similar to B tree but optimizations to make it fast.
+        - paragraph [ref=e108]: — Fractal tree supports message buffers inside all nodes except leaf nodes.
+        - paragraph [ref=e109]: — Patent with TokuDB (block size → 4MB)
+        - heading "Writes / Reads" [level=4] [ref=e110]
+        - paragraph [ref=e111]: Add column, delete column, insert, update whatever operation everything is saved as message somewhere among the intermediate nodes in Fractal Tree.
+        - paragraph [ref=e112]: The leaves still store the actual data like B Tree.
+        - paragraph [ref=e113]: While reading, the operation has to consider all messages on its path in order to identify the actual state of the data.
+        - paragraph [ref=e114]:
+          - img [ref=e115]
+        - heading "Conclusion" [level=2] [ref=e116]
+        - paragraph [ref=e117]:
+          - text: Congrats, you made it to the end! 🎉 Either you’re truly dedicated, incredibly bored, or just scrolling aimlessly through life—no judgment. Since this was reposted from my
+          - link "Medium Blog" [ref=e119] [cursor=pointer]:
+            - /url: https://medium.com/@akshatsonic/all-about-databases-b774bf975061
+          - text: ", it might feel a little less spicy than usual. But hey, stick around—better, funnier, and possibly life-altering content is coming soon! (Or at least something mildly entertaining.) 😆"
+      - generic [ref=e120]:
+        - link "#database" [ref=e121] [cursor=pointer]:
+          - /url: /tags/database
+        - link "#backend" [ref=e122] [cursor=pointer]:
+          - /url: /tags/backend
+  - contentinfo [ref=e123]:
+    - generic [ref=e124]:
+      - paragraph [ref=e125]: © 2026 Akshat Soni
+      - generic [ref=e126]:
+        - link "LinkedIn" [ref=e127] [cursor=pointer]:
+          - /url: https://linkedin.com/in/akshatsoni
+        - link "GitHub" [ref=e128] [cursor=pointer]:
+          - /url: https://github.com/akshatsonic
+        - link "Twitter" [ref=e129] [cursor=pointer]:
+          - /url: https://x.com/akshatsonic
+        - link "Instagram" [ref=e130] [cursor=pointer]:
+          - /url: https://instagram.com/akshatsonic
+  - generic [ref=e133]:
+    - button "Menu" [ref=e134]:
+      - img [ref=e136]
+      - generic: Menu
+    - button "Inspect" [ref=e140]:
+      - img [ref=e142]
+      - generic: Inspect
+    - button "Audit" [ref=e144]:
+      - img [ref=e146]
+      - generic: Audit
+    - button "Settings" [ref=e149]:
+      - img [ref=e151]
+      - generic: Settings

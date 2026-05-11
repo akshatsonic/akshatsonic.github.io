@@ -1,0 +1,71 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "akshatsonic" [ref=e3] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e4]:
+      - link "About" [ref=e5] [cursor=pointer]:
+        - /url: /about
+      - link "Writing" [ref=e6] [cursor=pointer]:
+        - /url: /blog
+      - link "Tags" [ref=e7] [cursor=pointer]:
+        - /url: /tags
+      - button "Toggle theme" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+  - main [ref=e11]:
+    - generic [ref=e12]:
+      - heading "It Works on My Blog!" [level=1] [ref=e13]
+      - paragraph [ref=e14]:
+        - text: Hey, I'm
+        - strong [ref=e15]: Akshat Soni
+        - text: — a backend engineer who writes about databases, distributed systems, cloud infrastructure, and software engineering.
+      - paragraph [ref=e16]: If you've ever stared at a bug for hours only to find a missing semicolon, you're in the right place. Grab a coffee.
+    - generic [ref=e17]:
+      - heading "Recent Writing" [level=2] [ref=e18]
+      - list [ref=e19]:
+        - listitem [ref=e20]:
+          - generic [ref=e21]: Aug 23, 2025
+          - link "Notes | Load Balancing Orchestration using K8s and AWS" [ref=e22] [cursor=pointer]:
+            - /url: /blog/202508230934-lb-elb-alb-k8s
+        - listitem [ref=e23]:
+          - generic [ref=e24]: Jun 16, 2025
+          - link "Part 1 | JVM Series | Memory" [ref=e25] [cursor=pointer]:
+            - /url: /blog/202506160152-jvm-part-1
+        - listitem [ref=e26]:
+          - generic [ref=e27]: Apr 24, 2025
+          - 'link "Reactive Programming : How I see it ?" [ref=e28] [cursor=pointer]':
+            - /url: /blog/202504242303-reactive-programming
+        - listitem [ref=e29]:
+          - generic [ref=e30]: Mar 25, 2025
+          - link "Be Hungry !!!" [ref=e31] [cursor=pointer]:
+            - /url: /blog/202503250131-be-hungry
+        - listitem [ref=e32]:
+          - generic [ref=e33]: Mar 20, 2025
+          - link "All about databases" [ref=e34] [cursor=pointer]:
+            - /url: /blog/202503200639-all-about-databases
+      - link "All posts →" [ref=e35] [cursor=pointer]:
+        - /url: /blog
+  - contentinfo [ref=e36]:
+    - generic [ref=e37]:
+      - paragraph [ref=e38]: © 2026 Akshat Soni
+      - generic [ref=e39]:
+        - link "LinkedIn" [ref=e40] [cursor=pointer]:
+          - /url: https://linkedin.com/in/akshatsoni
+        - link "GitHub" [ref=e41] [cursor=pointer]:
+          - /url: https://github.com/akshatsonic
+        - link "Twitter" [ref=e42] [cursor=pointer]:
+          - /url: https://x.com/akshatsonic
+        - link "Instagram" [ref=e43] [cursor=pointer]:
+          - /url: https://instagram.com/akshatsonic
+  - generic [ref=e46]:
+    - button "Menu" [ref=e47]:
+      - img [ref=e49]
+      - generic: Menu
+    - button "Inspect" [ref=e53]:
+      - img [ref=e55]
+      - generic: Inspect
+    - button "Audit" [ref=e57]:
+      - img [ref=e59]
+      - generic: Audit
+    - button "Settings" [ref=e62]:
+      - img [ref=e64]
+      - generic: Settings

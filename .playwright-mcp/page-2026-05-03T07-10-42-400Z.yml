@@ -1,0 +1,264 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation "main navigation" [ref=e3]:
+      - link "Arpit Bhayani" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e8]:
+        - link "Blogs" [ref=e9] [cursor=pointer]:
+          - /url: /blogs
+          - generic [ref=e10]: Blogs
+        - link "Papershelf" [ref=e11] [cursor=pointer]:
+          - /url: /papershelf
+          - generic [ref=e12]: Papershelf
+        - link "Bookshelf" [ref=e13] [cursor=pointer]:
+          - /url: /bookshelf
+          - generic [ref=e14]: Bookshelf
+        - link "Courses" [ref=e15] [cursor=pointer]:
+          - /url: /courses
+          - generic [ref=e16]: Courses
+        - link "Talks" [ref=e17] [cursor=pointer]:
+          - /url: /talks
+          - generic [ref=e18]: Talks
+        - button "Toggle dark mode" [ref=e20] [cursor=pointer]:
+          - img [ref=e21]
+    - generic [ref=e28]:
+      - generic [ref=e30]:
+        - generic [ref=e32]:
+          - heading "Hey, I am Arpit" [level=1] [ref=e33]
+          - heading "engineering, databases, and systems. always building." [level=3] [ref=e34]
+          - generic [ref=e35]:
+            - paragraph [ref=e36]:
+              - text: I am a software engineer and engineering leader passionate about databases and system architecture. Currently, I am a Principal Engineer II at
+              - link "Razorpay" [ref=e37] [cursor=pointer]:
+                - /url: https://razorpay.com
+              - text: ", working at the intersection of Data and AI, and building Agent Studio, which enables merchants to create agents while we provide the harness to run them reliably. Previously, I was a Staff Engineer at Google, where I worked on"
+              - link "GCP Memorystore" [ref=e38] [cursor=pointer]:
+                - /url: https://cloud.google.com/memorystore
+              - text: and
+              - link "GCP Dataproc" [ref=e39] [cursor=pointer]:
+                - /url: https://cloud.google.com/dataproc
+              - text: . On the side, I am building -
+              - link "DiceDB" [ref=e40] [cursor=pointer]:
+                - /url: https://github.com/dicedb/dice
+              - text: which is fork of Valkey with
+              - link "multi-tiering" [ref=e41] [cursor=pointer]:
+                - /url: https://dicedb.io/docs/features/tiering
+              - text: and
+              - link "query subscriptions" [ref=e42] [cursor=pointer]:
+                - /url: https://dicedb.io/docs/features/query-subscriptions
+              - text: .
+            - paragraph [ref=e43]:
+              - text: I also spend time on independent research, publishing
+              - link "my work on ArXiv" [ref=e44] [cursor=pointer]:
+                - /url: https://arxiv.org/search/cs?searchtype=author&query=Bhayani%2C+A
+              - text: . My areas of interest include databases, approximate algorithms, and distributed systems.
+            - paragraph [ref=e45]:
+              - text: In 2024, I took a leap of faith and co-founded
+              - link "Profile.fyi" [ref=e46] [cursor=pointer]:
+                - /url: https://profile.fyi
+              - text: ", which was later acquired by Mercor. I was part of"
+              - link "Amazon's" [ref=e47] [cursor=pointer]:
+                - /url: https://www.amazon.com/
+              - text: Fast Data Team, where I worked on cold tiering of hot data and developed a seamless query interface across all storage tiers.
+            - paragraph [ref=e48]:
+              - text: I held engineering leadership positions (both IC and management) at
+              - link "Unacademy" [ref=e49] [cursor=pointer]:
+                - /url: https://unacademy.com/
+              - text: ", where I built, grew, and led Search, Site Reliability Engineering (SRE) teams, and Data Engineering teams. I hold a total of 12+ years of experience in scaling backend services, taking products and teams from 0 to 1, and beyond."
+            - paragraph [ref=e50]:
+              - text: I keep diving deep into engineering details and share my learnings by across my
+              - link "socials" [ref=e51] [cursor=pointer]:
+                - /url: https://twitter.com/arpit_bhayani
+              - text: and videos on
+              - link "YouTube" [ref=e52] [cursor=pointer]:
+                - /url: https://youtube.com/c/ArpitBhayani
+              - text: .
+          - list [ref=e53]:
+            - link "YouTube (200k)" [ref=e54] [cursor=pointer]:
+              - /url: https://youtube.com/c/ArpitBhayani
+              - img [ref=e56]
+              - generic [ref=e59]: YouTube (200k)
+            - link "Twitter (100k)" [ref=e60] [cursor=pointer]:
+              - /url: https://twitter.com/arpit_bhayani
+              - img [ref=e62]
+              - generic [ref=e64]: Twitter (100k)
+            - link "LinkedIn (250k)" [ref=e65] [cursor=pointer]:
+              - /url: https://linkedin.com/in/arpitbhayani
+              - img [ref=e67]
+              - generic [ref=e71]: LinkedIn (250k)
+            - link "GitHub (6k)" [ref=e72] [cursor=pointer]:
+              - /url: https://github.com/arpitbbhayani
+              - img [ref=e74]
+              - generic [ref=e76]: GitHub (6k)
+        - img "Arpit Bhayani" [ref=e80]
+      - generic [ref=e81]:
+        - generic [ref=e83]:
+          - heading "Recent blog posts • Full archive ➔" [level=2] [ref=e84]:
+            - text: Recent blog posts •
+            - link "Full archive ➔" [ref=e86] [cursor=pointer]:
+              - /url: /blogs
+          - paragraph [ref=e87]: Things I have written recently.
+          - list [ref=e90]:
+            - listitem [ref=e91]:
+              - text: "Apr 28, 2026 :"
+              - link "Your Monolith Is Already A Distributed System" [ref=e93] [cursor=pointer]:
+                - /url: /blogs/monolith-is-distributed-system
+            - listitem [ref=e94]:
+              - text: "Mar 08, 2026 :"
+              - link "Databases Were Not Designed For This" [ref=e96] [cursor=pointer]:
+                - /url: /blogs/defensive-databases
+            - listitem [ref=e97]:
+              - text: "Mar 04, 2026 :"
+              - link "BM25" [ref=e99] [cursor=pointer]:
+                - /url: /blogs/bm25
+            - listitem [ref=e100]:
+              - text: "Feb 24, 2026 :"
+              - link "JOIN Algorithms" [ref=e102] [cursor=pointer]:
+                - /url: /blogs/join-algorithms
+            - listitem [ref=e103]:
+              - text: "Feb 09, 2026 :"
+              - link "Venting at Work Comes at a Reputation Cost" [ref=e105] [cursor=pointer]:
+                - /url: /blogs/venting-at-work
+            - listitem [ref=e106]:
+              - text: "Feb 08, 2026 :"
+              - link "Why Half Your Skills Expire Every Few Years" [ref=e108] [cursor=pointer]:
+                - /url: /blogs/half-life
+            - listitem [ref=e109]:
+              - text: "Jan 27, 2026 :"
+              - link "Multi-Paxos - Consensus in Distributed Databases" [ref=e111] [cursor=pointer]:
+                - /url: /blogs/multi-paxos
+            - listitem [ref=e112]:
+              - text: "Jan 16, 2026 :"
+              - link "MySQL Replication Internals" [ref=e114] [cursor=pointer]:
+                - /url: /blogs/mysql-replication-internals
+            - listitem [ref=e115]:
+              - text: "Dec 29, 2025 :"
+              - link "Bloom Filters" [ref=e117] [cursor=pointer]:
+                - /url: /blogs/bloom-filters
+            - listitem [ref=e118]:
+              - text: "Dec 23, 2025 :"
+              - link "Clock Synchronization Is a Nightmare" [ref=e120] [cursor=pointer]:
+                - /url: /blogs/clock-sync-nightmare
+        - generic [ref=e122]:
+          - heading "Recent papers • Papershelf ➔" [level=2] [ref=e123]:
+            - text: Recent papers •
+            - link "Papershelf ➔" [ref=e125] [cursor=pointer]:
+              - /url: /papershelf
+          - paragraph [ref=e126]: Papers I have read recently.
+          - list [ref=e129]:
+            - listitem [ref=e130]:
+              - link "Real-time Data Infrastructure at Uber" [ref=e131] [cursor=pointer]:
+                - /url: https://drive.google.com/file/d/120zrm63AxpWXNHCoY9aOo45mem_zrOcl/view?usp=sharing
+            - listitem [ref=e132]:
+              - 'link "DeepSeekMath-V2: Towards Self-Verifiable Mathematical Reasoning" [ref=e133] [cursor=pointer]':
+                - /url: https://drive.google.com/file/d/1GRWC0m7_Txzpttwh689Ki4QvPfw7Fzb6/view?usp=sharing
+            - listitem [ref=e134]:
+              - 'link "Lost in the Middle: How Language Models Use Long Contexts" [ref=e135] [cursor=pointer]':
+                - /url: https://drive.google.com/file/d/16Mp2CjM_AdmItMhFTZjqr47j0U9Fmj13/view?usp=sharing
+            - listitem [ref=e136]:
+              - 'link "Yedalog: Exploring Knowledge at Scale" [ref=e137] [cursor=pointer]':
+                - /url: https://drive.google.com/file/d/1lSGc9EwLL0YyO54C-P5g45V_ub0PLrfS/view?usp=sharing
+            - listitem [ref=e138]:
+              - link "C/C++ Thread Safety Analysis" [ref=e139] [cursor=pointer]:
+                - /url: https://drive.google.com/file/d/1MefMB5wxgJ8MeDYmzzDyitc8CXtbJUlu/view?usp=sharing
+            - listitem [ref=e140]:
+              - 'link "Mesa: Geo-Replicated, Near Real-Time, Scalable Data Warehousing" [ref=e141] [cursor=pointer]':
+                - /url: https://drive.google.com/file/d/1A9er-QaeGlQXkVOmvSCXarB2DfFoxQFr/view?usp=sharing
+            - listitem [ref=e142]:
+              - 'link "MyRocks: LSM-Tree Database Storage Engine Serving Facebook''s Social Graph" [ref=e143] [cursor=pointer]':
+                - /url: https://drive.google.com/file/d/1HrL7uhEkWwmi5u8rfPRBXYRFJnn-VOwg/view?usp=sharing
+  - generic [ref=e146]:
+    - generic [ref=e147]:
+      - generic [ref=e148]:
+        - generic [ref=e149]: Writings and Learnings
+        - paragraph [ref=e150]:
+          - link "Blogs" [ref=e151] [cursor=pointer]:
+            - /url: /blogs
+        - paragraph [ref=e152]:
+          - link "Papershelf" [ref=e153] [cursor=pointer]:
+            - /url: /papershelf
+        - paragraph [ref=e154]:
+          - link "Bookshelf" [ref=e155] [cursor=pointer]:
+            - /url: /bookshelf
+        - paragraph [ref=e156]:
+          - link "RSS Feed" [ref=e157] [cursor=pointer]:
+            - /url: /rss.xml
+      - generic [ref=e158]:
+        - generic [ref=e159]: Courses
+        - paragraph [ref=e160]:
+          - link "System Design Masterclass" [ref=e161] [cursor=pointer]:
+            - /url: /masterclass
+        - paragraph [ref=e162]:
+          - link "System Design for Beginners" [ref=e163] [cursor=pointer]:
+            - /url: /system-design-for-beginners
+        - paragraph [ref=e164]:
+          - link "Redis Internals" [ref=e165] [cursor=pointer]:
+            - /url: /redis-internals
+      - generic [ref=e166]:
+        - generic [ref=e167]: Legal and Contact
+        - paragraph [ref=e168]:
+          - link "About me" [ref=e169] [cursor=pointer]:
+            - /url: /about-arpit-bhayani
+        - paragraph [ref=e170]:
+          - link "Terms and Conditions" [ref=e171] [cursor=pointer]:
+            - /url: /terms-conditions
+        - paragraph [ref=e172]:
+          - link "Privacy Policy" [ref=e173] [cursor=pointer]:
+            - /url: /privacy-policy
+        - paragraph [ref=e174]:
+          - link "Refund Policy" [ref=e175] [cursor=pointer]:
+            - /url: /refund-policy
+        - paragraph [ref=e176]:
+          - link "Contact Me" [ref=e177] [cursor=pointer]:
+            - /url: /contact
+      - generic [ref=e178]:
+        - generic [ref=e179]: Everything Else
+        - paragraph [ref=e180]:
+          - link "Collaborate with me" [ref=e181] [cursor=pointer]:
+            - /url: /collaborate
+        - paragraph [ref=e182]:
+          - link "DiceDB" [ref=e183] [cursor=pointer]:
+            - /url: https://github.com/DiceDB/Dice
+        - paragraph [ref=e184]:
+          - link "Revine" [ref=e185] [cursor=pointer]:
+            - /url: https://revine.arpitbhayani.me
+        - paragraph [ref=e186]:
+          - link "The Smarter Chimp" [ref=e187] [cursor=pointer]:
+            - /url: https://twitter.com/TheSmarterChimp
+      - generic [ref=e188]:
+        - generic [ref=e189]:
+          - paragraph [ref=e190]: Arpit's Newsletter read by 145,000 engineers
+          - paragraph [ref=e191]: Weekly essays on real-world system design, distributed systems, or a deep dive into some super-clever algorithm.
+        - paragraph
+        - generic [ref=e193]:
+          - link "Subscribe on LinkedIn" [ref=e194] [cursor=pointer]:
+            - /url: https://www.linkedin.com/newsletters/asli-engineering-6921728898456072192/
+          - link "Subscribe on Substack" [ref=e195] [cursor=pointer]:
+            - /url: https://arpit.substack.com
+        - paragraph
+    - generic [ref=e198]:
+      - paragraph [ref=e199]: The courses listed on this website are offered by
+      - paragraph [ref=e200]:
+        - text: Relog Deeptech Pvt. Ltd.
+        - text: 203, Sagar Apartment, Camp Road, Mangilal Plot, Amravati, Maharashtra, 444602
+        - text: "GSTIN: 27AALCR5165R1ZF"
+    - generic [ref=e202]:
+      - list [ref=e203]:
+        - link "YouTube (200k)" [ref=e204] [cursor=pointer]:
+          - /url: https://youtube.com/c/ArpitBhayani
+          - img [ref=e206]
+          - generic [ref=e209]: YouTube (200k)
+        - link "Twitter (100k)" [ref=e210] [cursor=pointer]:
+          - /url: https://twitter.com/arpit_bhayani
+          - img [ref=e212]
+          - generic [ref=e214]: Twitter (100k)
+        - link "LinkedIn (250k)" [ref=e215] [cursor=pointer]:
+          - /url: https://linkedin.com/in/arpitbhayani
+          - img [ref=e217]
+          - generic [ref=e221]: LinkedIn (250k)
+        - link "GitHub (6k)" [ref=e222] [cursor=pointer]:
+          - /url: https://github.com/arpitbbhayani
+          - img [ref=e224]
+          - generic [ref=e226]: GitHub (6k)
+      - list [ref=e227]:
+        - listitem [ref=e228]: © Arpit Bhayani, 2025
