@@ -44,3 +44,15 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  filter: url(#grainy-noise);
+  pointer-events: none;
+  z-index: 9999;
+}

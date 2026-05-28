@@ -69,3 +69,20 @@ const ogImage = image ? new URL(image, Astro.url) : new URL('/PFP2.png', Astro.u
 
 
   </script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function () {
+    var svgNS = 'http://www.w3.org/2000/svg'
+    var svg = document.createElementNS(svgNS, 'svg')
+    svg.setAttribute('width', '0')
+    svg.setAttribute('height', '0')
+    svg.setAttribute('aria-hidden', 'true')
+    svg.style.position = 'absolute'
+    svg.innerHTML =
+      '<filter id="grainy-noise">' +
+        '<feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch"/>' +
+        '<feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0.25 0"/>' +
+      '</filter>'
+    document.body.prepend(svg)
+  })
+</script>
