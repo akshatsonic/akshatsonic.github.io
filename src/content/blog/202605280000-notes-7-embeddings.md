@@ -9,7 +9,9 @@ tags: ["ai", "machine-learning", "embeddings", "rag"]
 
 Example of food recommendation app (if you like `x` here is `y`)
 
-![Screenshot 2026-05-28 at 3.59.34 PM](/notes-7-embeddings/Screenshot%202026-05-28%20at%203.59.34%20PM.png)
+<p align="center">
+<img src="/notes-7-embeddings/screenshot-3-59-34.png">
+</p>
 
 - **one-hot encoding** - encoding something in a vector where one dimension is `1` and all other are `0`
 - when we create one-hot encodings, we have several problems
@@ -33,15 +35,21 @@ Examples :-
 
 consider one dimension of how "sandwichy" a dish is
 
-![Screenshot 2026-05-28 at 4.22.19 PM](/notes-7-embeddings/Screenshot%202026-05-28%20at%204.22.19%20PM.png)
+<p align="center">
+<img src="/notes-7-embeddings/screenshot-4-22-19.png">
+</p>
 
 apple pie lies somewhere between hotdog and shwarma, now add another dimension called "dessertness"
 
-![Screenshot 2026-05-28 at 4.23.20 PM](/notes-7-embeddings/Screenshot%202026-05-28%20at%204.23.20%20PM.png)
+<p align="center">
+<img src="/notes-7-embeddings/screenshot-4-23-20.png">
+</p>
 
 now lets add "liquidness" as another dimension
 
-![Screenshot 2026-05-28 at 4.24.07 PM](/notes-7-embeddings/Screenshot%202026-05-28%20at%204.24.07%20PM.png)
+<p align="center">
+<img src="/notes-7-embeddings/screenshot-4-24-07.png">
+</p>
 
 see how more dimensions help me better decide which 2 meals are inter-related
 
