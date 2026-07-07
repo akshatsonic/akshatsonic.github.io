@@ -1,7 +1,7 @@
 ---
 title: 'Notes on Embeddings'
 description: 'Understanding embeddings, vector representations, contextual vs static embeddings, and how they power modern RAG systems'
-pubDate: 'May 28 2026'
+pubDate: 'Jul 07 2026'
 tags: ["ai", "machine-learning", "embeddings", "rag"]
 ---
 
