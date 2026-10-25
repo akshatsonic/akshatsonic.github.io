@@ -77,10 +77,16 @@ html,body{margin:0;padding:0;background:#f6efe3}button{cursor:pointer}img{max-wi
 #ak-refined dialog h2{font-size:36px;margin:12px 0 25px}
 #ak-refined .ak-collection-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 #ak-refined .ak-collection-grid .ak-blog{width:100%;min-height:210px}
+#ak-refined .ak-writing-grid{grid-template-columns:1fr}
+#ak-refined .ak-writing-grid .ak-blog{min-height:120px}
 #ak-refined .ak-collection-grid .ak-photo{width:100%;height:245px}
 #ak-refined .ak-reader{font:18px/1.8 Georgia,serif;max-width:580px;margin:0 auto}
 #ak-refined .ak-reader p{margin:0 0 20px}
 #ak-refined .ak-large-photo{position:relative;height:380px;margin-bottom:18px}
+#ak-refined .ak-photo-nav{position:absolute;z-index:3;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--ak-line);border-radius:50%;background:var(--ak-bg);color:var(--ak-accent);font-size:24px;line-height:1}
+#ak-refined .ak-photo-nav:hover{background:var(--ak-soft)}
+#ak-refined .ak-photo-nav-prev{left:12px}
+#ak-refined .ak-photo-nav-next{right:12px}
 @keyframes ak-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @keyframes ak-ribbon-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes ak-drift{from{transform:translateX(-14px) rotate(-3deg)}to{transform:translateX(14px) rotate(3deg)}}
