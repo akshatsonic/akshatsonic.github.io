@@ -1,32 +1,77 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import RecentPublications from "../components/RecentPublications.astro";
+import { getCollection } from "astro:content";
+import { photographs } from "../data/photographs.js";
+import "../styles/portfolio.css";
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    tag: post.data.tags?.[0] || "WRITING",
+    date: post.data.pubDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+    url: `/blog/${post.slug}`,
+  }));
+const postData = JSON.stringify(posts).replace(/</g, "\\u003c");
+const photographData = JSON.stringify(photographs).replace(/</g, "\\u003c");
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title="Akshat Soni — Code, Chai & Curiosity" description="Akshat Soni — software engineer, photographer, and builder." image="/portfolio-assets/akshat-portrait.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet" />
   </head>
-  <body class="max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
-    <Header />
-    <main>
-      <section class="mb-4">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight font-heading">
-          It Works on My Blog!
-        </h1>
-        <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-          Hey, I'm <strong class="text-gray-900 dark:text-gray-100 font-medium">Akshat Soni</strong>, a backend engineer who spends his days building distributed systems, arguing with databases, and occasionally shipping things that survive production.
-        </p>
-        <p class="text-base text-gray-500 dark:text-gray-500 leading-relaxed">
-          This is where I write about the things I learn, break, and figure out. No fluff, no corporate speak. Just honest notes from someone in the trenches.
-        </p>
-      </section>
-      <RecentPublications />
-    </main>
-    <Footer />
+  <body class="portfolio-home">
+    <div id="ak-device-stage">
+      <div id="ak-refined">
+        <main>
+          <section class="ak-hero">
+            <p class="ak-greeting-art">Hello Internet!</p>
+            <div class="ak-name-stage">
+              <h1 aria-label="Akshat Soni"><span class="ak-first">AKSHAT</span><span class="ak-last">SONI</span></h1>
+              <img class="ak-portrait" src="/portfolio-assets/akshat-portrait.png" alt="Akshat smiling" fetchpriority="high" />
+              <div class="ak-handwritten"><img src="/portfolio-assets/curious-by-default.webp" alt="Curious by default" /></div>
+              <div class="ak-chai"><img src="/portfolio-assets/chai.webp" alt="A steaming glass of chai doodle" /></div>
+            </div>
+            <p class="ak-bio">I build things. I chase good light.<br />I write along the way.</p>
+          </section>
+          <div class="ak-ribbon" aria-label="Code, chai and curiosity. Always a work in progress. Side quests welcome.">
+            <div class="ak-ribbon-track" aria-hidden="true">
+              <span class="ak-ribbon-copy">CODE, CHAI & CURIOSITY &nbsp; ✳ &nbsp; ALWAYS A WORK IN PROGRESS &nbsp; ✳ &nbsp; SIDE QUESTS WELCOME</span>
+              <span class="ak-ribbon-copy">CODE, CHAI & CURIOSITY &nbsp; ✳ &nbsp; ALWAYS A WORK IN PROGRESS &nbsp; ✳ &nbsp; SIDE QUESTS WELCOME</span>
+            </div>
+          </div>
+          <section class="ak-about">
+            <div><p class="ak-meta">01 / THE BUILDER</p><h2>Serious about systems.<br />Playful about<br /><em>everything else.</em></h2><p class="ak-copy">A senior software engineer who loves making things, asking questions, and figuring out how it all works.</p></div>
+            <img class="ak-doodle" src="/portfolio-assets/laptop.webp" alt="Hand-drawn laptop illustration" loading="lazy" />
+          </section>
+          <section class="ak-writing">
+            <div class="ak-section-heading"><div><p class="ak-meta">02 / WORDS & WONDERINGS</p><h2>Notes from<br /><em>the rabbit hole.</em></h2></div><div class="ak-heading-actions"><button type="button" class="ak-motion-toggle" data-motion-toggle="ak-blog-track" data-motion-label="writing" aria-controls="ak-blog-track" aria-pressed="false" aria-label="Pause moving writing previews">Pause previews</button><button type="button" data-library="writing" class="ak-link">Explore all writing ↗</button></div></div>
+            <div class="ak-window" aria-label="Scrolling blog previews"><div class="ak-track" id="ak-blog-track"></div></div>
+            <p class="ak-caption">Published articles · Select a card to read the full post.</p>
+          </section>
+          <section class="ak-photography">
+            <div class="ak-section-heading"><div><p class="ak-meta">03 / THROUGH MY LENS</p><h2>Less scrolling.<br />More <em>seeing.</em></h2></div><div class="ak-camera-frame"><img class="ak-camera" src="/portfolio-assets/camera.webp" alt="Hand-drawn camera illustration" loading="lazy" /></div></div>
+            <div class="ak-gallery-heading"><span class="ak-meta">LITTLE MOMENTS, PASSING BY →</span><div class="ak-gallery-actions"><button type="button" class="ak-motion-toggle" data-motion-toggle="ak-photo-track" data-motion-label="photography" aria-controls="ak-photo-track" aria-pressed="false" aria-label="Pause moving photography previews">Pause previews</button><a href="/photographs/" class="ak-link">Explore all photographs ↗</a></div></div>
+            <div class="ak-window" aria-label="Scrolling photography previews"><div class="ak-track ak-photo-track" id="ak-photo-track"></div></div>
+            <p class="ak-caption">A few moments, held in light.</p>
+          </section>
+          <footer><p class="ak-meta">ALWAYS UP TO SOMETHING.</p><h2>LET’S MAKE<br />SOMETHING.</h2><p>Engineering, photographs, and the things in between.</p><div class="ak-social-links"><a class="ak-contact" href="https://linkedin.com/in/akshatsoni" target="_blank" rel="noopener noreferrer">Say hello on LinkedIn ↗</a><a class="ak-contact ak-x-link" href="https://x.com/akshatsonic" target="_blank" rel="noopener noreferrer" aria-label="Follow @akshatsonic on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19 9.46 12.504h-7.406l-5.8-7.584-6.64 7.584h-3.68l8.6-9.83L.0 1.153h7.594l5.242 6.93zm-1.29 19.49h2.039L6.486 3.242H4.298z" /></svg><span>@akshatsonic</span></a><a class="ak-contact ak-github-link" href="https://github.com/akshatsonic" target="_blank" rel="noopener noreferrer" aria-label="View @akshatsonic on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.1c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.73 0c2.19-1.49 3.14-1.18 3.14-1.18.63 1.59.24 2.77.12 3.06.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.28 5.69.41.36.78 1.06.78 2.14v3.18c0 .3.21.65.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" /></svg><span>@akshatsonic</span></a></div></footer>
+        </main>
+        <dialog id="ak-collection-dialog" aria-labelledby="ak-dialog-title">
+          <div class="ak-dialog-bar"><button type="button" id="ak-dialog-back" class="ak-link" hidden>← Back to collection</button><button type="button" id="ak-dialog-close" class="ak-close" aria-label="Close collection">Close ×</button></div>
+          <p class="ak-meta" id="ak-dialog-kicker"></p><h2 id="ak-dialog-title"></h2>
+          <div id="ak-dialog-content"></div>
+        </dialog>
+      </div>
+    </div>
+    <script is:inline type="application/json" id="ak-post-data" set:html={postData}></script>
+    <script is:inline type="application/json" id="ak-photo-data" set:html={photographData}></script>
+    <script is:inline src="/portfolio.js" defer></script>
   </body>
 </html>

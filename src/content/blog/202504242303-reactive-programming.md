@@ -10,7 +10,7 @@ readTime: '6 min'
 
 So I was exposed to reactive framework when i was given a project to be migrate an existing service (home page) to the new reactive paradigm. I was introduced to Spring WebFlux along with Netty (the reactive server). I was overwhelmed by the amount of information I was consuming. So here’s my experience on how i got a small grasp 🤝 of spring webflux and shifted my mind to reactive paradigm.
 
-# Non-Reactive Programming (a.k.a. The Blocking Life)
+## Non-Reactive Programming (a.k.a. The Blocking Life)
 
 If you’ve ever built a web application (or just suffered through one), chances are you’ve encountered the good ol’ **blocking** model — a.k.a. **non-reactive programming**. Let’s use the Spring Framework as our guinea pig here.
 

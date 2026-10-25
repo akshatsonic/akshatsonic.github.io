@@ -1,37 +1,25 @@
----
-title: 'Using MDX'
-description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jul 02 2022'
-heroImage: '/blog-placeholder-5.jpg'
-tags: ["mdx"]
-readTime: '5 min'
----
-to be written in /src/content/blog
+# Akshat Soni's website
 
+An Astro portfolio and blog deployed to GitHub Pages. The homepage follows the Espresso & oat design in the supplied `akshat-portfolio` mock.
 
-This theme comes with the [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/) integration installed and configured in your `astro.config.mjs` config file. If you prefer not to use MDX, you can disable support by removing the integration from your config file.
+## Run locally
 
-## Why MDX?
+```sh
+npm install
+npm run dev
+```
 
-MDX is a special flavor of Markdown that supports embedded JavaScript & JSX syntax. This unlocks the ability to [mix JavaScript and UI Components into your Markdown content](https://docs.astro.build/en/guides/markdown-content/#mdx-features) for things like interactive charts or alerts.
+Open the local URL printed by Astro. Before publishing, run `npm run build` (Astro type checks and builds the site). `npm run preview` serves the built output. Pushing to `master` triggers the GitHub Pages workflow in `.github/workflows/deploy.yaml`.
 
-If you have existing content authored in MDX, this integration will hopefully make migrating to Astro a breeze.
+## Where to edit
 
-## Example
+- `src/pages/index.astro` builds the homepage and passes published articles to its scrolling writing cards and collection modal, which link to their article pages.
+- `src/styles/portfolio.css`, `public/portfolio.js`, and `public/portfolio-assets/` hold the homepage design, interactions, and local artwork.
+- `src/content/blog/*.md` holds articles and frontmatter. `src/content/config.ts` defines the metadata. Article pages and the RSS feed derive from this collection; tag metadata supplies category labels on homepage cards.
+- `src/components/BaseHead.astro` supplies shared metadata; `astro.config.mjs` sets the production site URL and sitemap integration.
 
-Here is how you import and use a UI component inside of MDX.  
-When you open this page in the browser, you should see the clickable button below.
+The photography collection uses labeled composition placeholders until actual photos and captions are supplied. Do not replace them with invented work.
 
-import HeaderLink from '../../components/HeaderLink.astro'
+## Check changes
 
-<HeaderLink href="#" onclick="alert('clicked!')">
-    Embedded component in MDX
-</HeaderLink>
-
-## More Links
-
--   [MDX Syntax Documentation](https://mdxjs.com/docs/what-is-mdx)
--   [Astro Usage Documentation](https://docs.astro.build/en/guides/markdown-content/#markdown-and-mdx-pages)
--   **Note:** [Client Directives](https://docs.astro.build/en/reference/directives-reference/#client-directives) are still required to create interactive components. Otherwise, all components in your MDX will render as static HTML (no JavaScript) by default.
-
-
+After `npm run build`, check `/`, an article under `/blog/`, and `/rss.xml`. On the homepage, check the hero, mobile ribbon, moving strips, writing collection modal, article links, and photography dialog at desktop and 320–660px mobile widths. Check keyboard focus, Escape and backdrop dismissal, photo arrows and swipe, and reduced-motion behavior.

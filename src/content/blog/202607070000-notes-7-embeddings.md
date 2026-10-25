@@ -22,7 +22,7 @@ Example of food recommendation app (if you like `x` here is `y`)
 	- unable to support on device machine learning (ODML)
 - Embeddings helps to lower dimensions of sparse data like above and address the above problems
 
-### Definition
+## Definition
 
 - Embedding is a vector representation in embedding space
 
@@ -58,32 +58,32 @@ see how more dimensions help me better decide which 2 meals are inter-related
 
 Embeddings are usually specific to a task, as they define separate dimensions. *embedding models that classify veg and non veg will be completely different from models that suggest meals based on the time of day (breakfast, lunch, etc)*
 
-### Static Embeddings
+## Static Embeddings
 
 embeddings differ from task to task, one specific task has general applicability: **predicting context of the word**
 
 Models trained for context assume words appearing in same context are semantically related. e.g. "They rode a burro down into the Grand Canyon" and "They rode a horse down into the canyon", here models suggest that horse ~= burro
 
-### word2vec - an old library
+## word2vec - an old library
 
 `word2vec` trains on a corpus of documents to obtain a single global embedding per word. When each word or data point has a single embedding vector, this is called a **static embedding**.
 
 Some read [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)
 
-### Obtaining Embeddings
+## Obtaining Embeddings
 
 - many mathematical techniques to reduce higher dimension into lower dimension
 	- E.g. [principal component analysis](https://wikipedia.org/wiki/Principal_component_analysis) (PCA) has been used to create word embeddings. Given a set of instances like [**bag of words**](https://developers.google.com/machine-learning/glossary#bag-of-words) vectors, PCA tries to find highly correlated dimensions that can be collapsed into a single dimension.
 - we can add a hidden layer when training a neural network of *d* nodes (embedding dimension), this way your embedding layer will be trained along side with your neural network, but takes a bit of time
 
-### Contextual Embedding
+## Contextual Embedding
 
 - `word2vec` provides static embedding, here the word `orange` will be only be closed to the colors and not fruits
 - contextual embedding solves this by having vector embedding of the word based on the words surrounding it, Some methods for creating contextual embeddings, like [ELMo](https://wikipedia.org/wiki/ELMo)
 
 > Transformer models use a [self-attention](https://developers.google.com/machine-learning/glossary#self-attention-also-called-self-attention-layer) layer to weight the relevance of the other words in a sequence to each individual word. They also add the relevant column from a **positional embedding matrix** (see [positional encoding](https://developers.google.com/machine-learning/glossary#positional-encoding)) to each previously learned token embedding, element by element, to produce the input embedding that is fed into the rest of the model for inference. This **input embedding**, unique to each distinct textual sequence, is a contextual embedding.
 
-# FAQs
+## FAQs
 
 **Q:** Since LLMs are trained and embeddings are generated for the data LLMs are being trained on, what does it mean when I say that I used this model to embed my documents?
 
@@ -138,7 +138,7 @@ Comparing a query against the entire dataset is known as **Exact Nearest Neighbo
 
 To solve this, production RAG systems use **Approximate Nearest Neighbor (ANN)** search.
 
-### The Shift to Approximate Nearest Neighbor (ANN)
+## The Shift to Approximate Nearest Neighbor (ANN)
 
 Instead of finding the *absolute perfect* match by scanning everything, ANN algorithms trade a tiny, almost unnoticeable amount of accuracy for massive gains in speed and scalability. They bring the search complexity down from $O(N)$ to roughly $O(\log N)$.
 
@@ -162,6 +162,6 @@ IVF uses clustering to partition your vector space into distinct zones (Voronoi 
 - **The Search:** When a query arrives, the system first compares the query to the *centroids*. Once it finds the closest centroid, it only does similarity checks against the vectors living inside that specific cluster.
 - **The Result:** If you have 1,000 clusters, you immediately eliminate 99.9% of the database from the search space.
 
-### Summary for Production
+## Summary for Production
 
 When a user asks a question in a production RAG app, the system embeds the query, traverses a pre-computed index (like HNSW), and only performs similarity math against a small, highly relevant subset of documents.

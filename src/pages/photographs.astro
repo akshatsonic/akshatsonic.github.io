@@ -1,0 +1,55 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import { photographs } from "../data/photographs.js";
+import "../styles/portfolio.css";
+
+const photographData = JSON.stringify(photographs).replace(/</g, "\\u003c");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Photographs — Akshat Soni" description="A few moments, held in light. Photographs by Akshat Soni." image="/portfolio-assets/akshat-portrait.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet" />
+  </head>
+  <body class="portfolio-home">
+    <div id="ak-device-stage">
+      <div id="ak-refined" class="ak-gallery-page">
+        <main class="ak-photographs-page">
+          <header class="ak-photographs-header">
+            <a class="ak-page-back" href="/">← Back to home</a>
+            <p class="ak-meta">03 / THROUGH MY LENS</p>
+            <h1>Less scrolling.<br />More <em>seeing.</em></h1>
+            <p class="ak-photographs-intro">A few moments, held in light.</p>
+          </header>
+          <section class="ak-photographs-gallery" aria-label="Photograph collection">
+            <div class="ak-collection-grid ak-photographs-grid">
+              {photographs.map((photo, index) => (
+                <button class="ak-photo" type="button" data-kind="photos" data-index={index} data-preview="false" aria-label={`Open photograph: ${photo.title}. ${photo.caption}`}>
+                  <img class="ak-photo-image" src={photo.src} alt={photo.caption} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
+                  <span class="ak-photo-label">{photo.title} ↗</span>
+                </button>
+              ))}
+            </div>
+          </section>
+          <footer class="ak-photographs-footer"><a class="ak-page-back" href="/">← Back to Akshat’s homepage</a><span class="ak-meta">CODE, CHAI & CURIOSITY</span></footer>
+        </main>
+        <div hidden>
+          <div class="ak-window"><div class="ak-track" id="ak-blog-track"></div></div>
+          <div class="ak-window"><div class="ak-track" id="ak-photo-track"></div></div>
+        </div>
+        <dialog id="ak-collection-dialog" aria-labelledby="ak-dialog-title">
+          <div class="ak-dialog-bar"><button type="button" id="ak-dialog-back" class="ak-link" hidden>← Back to collection</button><button type="button" id="ak-dialog-close" class="ak-close" aria-label="Close photograph">Close ×</button></div>
+          <p class="ak-meta" id="ak-dialog-kicker"></p><h2 id="ak-dialog-title"></h2>
+          <div id="ak-dialog-content"></div>
+        </dialog>
+      </div>
+    </div>
+    <script is:inline type="application/json" id="ak-post-data">[]</script>
+    <script is:inline type="application/json" id="ak-photo-data" set:html={photographData}></script>
+    <script is:inline src="/portfolio.js" defer></script>
+  </body>
+</html>
