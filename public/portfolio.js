@@ -1,7 +1,8 @@
 (() => {
   const root = document.getElementById('ak-refined');
   const posts = JSON.parse(document.getElementById('ak-post-data').textContent);
-  const photos = JSON.parse(document.getElementById('ak-photo-data').textContent);
+  const photos = JSON.parse(document.getElementById('ak-photo-data').textContent)
+    .map((photo) => ({ location: '', ...photo }));
   const dialog = document.getElementById('ak-collection-dialog');
   const title = document.getElementById('ak-dialog-title');
   const kicker = document.getElementById('ak-dialog-kicker');
@@ -11,6 +12,7 @@
   let activeView = 'collection';
   let currentPhotoIndex = 0;
   let touchStart = null;
+  let resizePhotoViewer = null;
 
   function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -68,6 +70,12 @@
     back.hidden = false;
     kicker.textContent = 'PHOTOGRAPHY / THROUGH MY LENS';
     title.textContent = photo.title;
+    const polaroid = el('div', 'ak-polaroid');
+    polaroid.tabIndex = 0;
+    polaroid.setAttribute('role', 'group');
+    polaroid.setAttribute('aria-label', `${photo.title}. Activate to flip the photograph and view its location.`);
+    const inner = el('div', 'ak-polaroid-inner');
+    const front = el('figure', 'ak-polaroid-face ak-polaroid-front');
     const frame = el('div', 'ak-large-photo');
     frame.dataset.photoFrame = '';
     const image = el('img', 'ak-large-photo-image');
@@ -76,35 +84,26 @@
     image.decoding = 'async';
     const sizePhotoViewer = () => {
       if (!image.naturalWidth || !image.naturalHeight) return;
-      const style = getComputedStyle(dialog);
-      const horizontalPadding = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
-      const maxWidth = Math.max(180, Math.min(1000, window.innerWidth - horizontalPadding - 24));
-      const minWidth = Math.min(560, maxWidth);
-      dialog.style.width = `${minWidth + horizontalPadding}px`;
+      const matStyle = getComputedStyle(front);
+      const matHorizontal = parseFloat(matStyle.paddingLeft) + parseFloat(matStyle.paddingRight) + parseFloat(matStyle.borderLeftWidth) + parseFloat(matStyle.borderRightWidth);
+      const maxWidth = Math.max(180, Math.min(700, window.innerWidth - matHorizontal - 32));
+      dialog.style.width = `${Math.min(480, maxWidth) + matHorizontal}px`;
       dialog.style.height = '';
       requestAnimationFrame(() => {
-        const verticalPadding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
-        const barStyle = getComputedStyle(dialog.querySelector('.ak-dialog-bar'));
-        const titleStyle = getComputedStyle(title);
-        const frameStyle = getComputedStyle(frame);
-        const caption = content.querySelector('.ak-photo-caption');
-        const verticalMargins = (elementStyle) => parseFloat(elementStyle.marginTop) + parseFloat(elementStyle.marginBottom);
-        const chromeHeight = verticalPadding + 2 +
-          dialog.querySelector('.ak-dialog-bar').getBoundingClientRect().height + verticalMargins(barStyle) +
-          kicker.getBoundingClientRect().height + verticalMargins(getComputedStyle(kicker)) +
-          title.getBoundingClientRect().height + verticalMargins(titleStyle) +
-          caption.getBoundingClientRect().height + verticalMargins(getComputedStyle(caption)) +
-          verticalMargins(frameStyle);
-        const maxHeight = Math.max(120, Math.min(680, window.innerHeight * 0.88 - chromeHeight - 8));
+        const matVertical = parseFloat(matStyle.paddingTop) + parseFloat(matStyle.paddingBottom) + parseFloat(matStyle.borderTopWidth) + parseFloat(matStyle.borderBottomWidth);
+        const note = front.querySelector('.ak-polaroid-note');
+        const chromeHeight = matVertical + note.getBoundingClientRect().height + 8;
+        const maxHeight = Math.max(120, Math.min(680, window.innerHeight * 0.88 - chromeHeight));
         const scale = Math.min(maxWidth / image.naturalWidth, maxHeight / image.naturalHeight, 1);
         const width = Math.round(image.naturalWidth * scale);
         const height = Math.round(image.naturalHeight * scale);
         frame.style.width = `${width}px`;
         frame.style.height = `${height}px`;
-        dialog.style.width = `${Math.max(width, minWidth) + horizontalPadding}px`;
+        dialog.style.width = `${width + matHorizontal}px`;
         dialog.style.height = `${Math.ceil(chromeHeight + height)}px`;
       });
     };
+    resizePhotoViewer = sizePhotoViewer;
     image.classList.add('ak-photo-enter');
     image.addEventListener('load', sizePhotoViewer, { once: true });
     frame.append(image);
@@ -119,7 +118,41 @@
     next.setAttribute('aria-label', 'Next photograph');
     frame.append(previous, next);
 
-    content.replaceChildren(frame, el('p', 'ak-copy ak-photo-caption', photo.caption));
+    const note = el('div', 'ak-polaroid-note');
+    note.append(
+      el('figcaption', 'ak-copy ak-photo-caption', photo.caption),
+      el('span', 'ak-polaroid-flip-hint', '↻  Tap photo to see location'),
+    );
+    front.append(frame, note);
+    const backFace = el('div', 'ak-polaroid-face ak-polaroid-back');
+    backFace.setAttribute('aria-hidden', 'true');
+    backFace.append(
+      el('small', 'ak-polaroid-back-kicker', 'PHOTO NOTES'),
+      el('h3', 'ak-polaroid-back-title', photo.title),
+      el('div', 'ak-polaroid-back-location'),
+      el('small', 'ak-polaroid-back-hint', 'Click the print to return'),
+    );
+    const locationBlock = backFace.querySelector('.ak-polaroid-back-location');
+    locationBlock.append(el('span', '', 'TAKEN AT'), el('p', '', photo.location || 'Add location'));
+    inner.append(front, backFace);
+    polaroid.append(inner);
+    const flipPolaroid = () => {
+      const flipped = polaroid.classList.toggle('is-flipped');
+      backFace.setAttribute('aria-hidden', String(!flipped));
+      polaroid.setAttribute('aria-label', flipped
+        ? `${photo.title}. Location: ${photo.location || 'Add location'}. Activate to return to the photograph.`
+        : `${photo.title}. Activate to flip the photograph and view its location.`);
+    };
+    polaroid.addEventListener('click', (event) => {
+      if (event.target.closest('[data-photo-step]')) return;
+      flipPolaroid();
+    });
+    polaroid.addEventListener('keydown', (event) => {
+      if (event.target !== polaroid || !['Enter', ' '].includes(event.key)) return;
+      event.preventDefault();
+      flipPolaroid();
+    });
+    content.replaceChildren(polaroid);
     if (!dialog.open) dialog.showModal();
     dialog.scrollTop = 0;
     if (image.complete) sizePhotoViewer();
@@ -128,6 +161,10 @@
   function movePhoto(step) {
     if (activeView === 'photo') openPhoto(currentPhotoIndex + step);
   }
+
+  window.addEventListener('resize', () => {
+    if (activeView === 'photo') resizePhotoViewer?.();
+  });
 
   root.addEventListener('click', (event) => {
     const motionToggle = event.target.closest('[data-motion-toggle]');
