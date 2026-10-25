@@ -11,7 +11,7 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image } = Astro.props;
-const ogImage = image ? new URL(image, Astro.url) : new URL('/PFP2.png', Astro.url);
+const ogImage = image ? new URL(image, Astro.url) : new URL('/portfolio-assets/akshat-portrait.png', Astro.url);
 ---
 
 <!-- Global Metadata -->

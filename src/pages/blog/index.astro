@@ -24,8 +24,11 @@ const years = Object.keys(postByYear).sort((a, b) => parseInt(b) - parseInt(a));
 <html lang="en">
   <head>
     <BaseHead title="Writing · akshatsonic" description="Essays and notes on backend engineering, databases, and distributed systems." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
   </head>
-  <body class="max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
+  <body class="blog-index max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <Header />
     <main>
       <h1 class="text-4xl font-bold mb-12 font-heading">Writing</h1>
@@ -48,15 +51,6 @@ const years = Object.keys(postByYear).sort((a, b) => parseInt(b) - parseInt(a));
                     >
                       {post.data.title}
                     </a>
-                    {post.data.tags && post.data.tags.length > 0 && (
-                      <div class="flex gap-2 flex-wrap">
-                        {post.data.tags.map((tag: string) => (
-                          <a href={`/tags/${tag}`} class="text-xs text-gray-400 dark:text-gray-500 hover:text-sage-600 dark:hover:text-sage-400 transition-colors">
-                            #{tag}
-                          </a>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </li>
               ))}
@@ -67,4 +61,25 @@ const years = Object.keys(postByYear).sort((a, b) => parseInt(b) - parseInt(a));
     </main>
     <Footer />
   </body>
+  <style is:inline>
+    html:has(body.blog-index), html.dark:has(body.blog-index) { background: #f6efe3; }
+    body.blog-index { background: #f6efe3; color: #3d2922; font-family: Arial, Helvetica, sans-serif; letter-spacing: normal; color-scheme: light; }
+    body.blog-index::after { display: none; }
+    body.blog-index h1 { color: #714538; font-family: 'Archivo Black', 'Arial Black', Impact, sans-serif; letter-spacing: -0.055em; }
+    body.blog-index header, body.blog-index footer, body.blog-index ul { border-color: #c7ac96; }
+    body.blog-index header a, body.blog-index footer a, body.blog-index footer p,
+    body.blog-index h2, body.blog-index time, body.blog-index a { color: #714538; }
+    body.blog-index header #theme-toggle { display: none; }
+    body.blog-index li { border-color: #c7ac96; }
+    html.dark body.blog-index { color: #3d2922; }
+    html.dark body.blog-index header,
+    html.dark body.blog-index footer,
+    html.dark body.blog-index li { border-color: #c7ac96; }
+    html.dark body.blog-index header a,
+    html.dark body.blog-index footer a,
+    html.dark body.blog-index footer p,
+    html.dark body.blog-index h2,
+    html.dark body.blog-index span,
+    html.dark body.blog-index a { color: #714538; }
+  </style>
 </html>

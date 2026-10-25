@@ -3,19 +3,21 @@ import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { themeColors } from "../theme.js";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, heroImage, heroImageTitle, tags, readTime } = Astro.props;
+const { title, description, pubDate, heroImage, heroImageTitle, readTime } = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} image={heroImage} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
   </head>
-  <body class="max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
+  <body class="blog-article max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <Header />
     <main>
       <article>
@@ -41,23 +43,77 @@ const { title, description, pubDate, heroImage, heroImageTitle, tags, readTime }
           <slot />
         </div>
 
-        {tags && tags.length > 0 && (
-          <div class="flex gap-3 flex-wrap mt-12 pt-6 border-t border-sage-200 dark:border-sage-800">
-            {tags.map((tag) => (
-              <a href={`/tags/${tag}`} class="text-xs text-sage-600 dark:text-sage-400 hover:underline">#{tag}</a>
-            ))}
-          </div>
-        )}
       </article>
     </main>
     <Footer />
   </body>
 
   <style is:inline>
+    html:has(body.blog-article),
+    html.dark:has(body.blog-article) { background: #f6efe3; }
+    body.blog-article {
+      background: #f6efe3;
+      color: #3d2922;
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: normal;
+      color-scheme: light;
+    }
+    body.blog-article::after { display: none; }
+    body.blog-article header,
+    body.blog-article footer { border-color: #c7ac96; }
+    body.blog-article header a,
+    body.blog-article footer a,
+    body.blog-article footer p,
+    body.blog-article header button { color: #714538; }
+    body.blog-article header #theme-toggle { display: none; }
+    body.blog-article article > h1 {
+      color: #714538;
+      font-family: 'Archivo Black', 'Arial Black', Impact, sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 7vw, 4.4rem);
+      line-height: 1.04;
+      letter-spacing: -0.055em;
+      overflow-wrap: anywhere;
+    }
+    body.blog-article article > div:first-child,
+    body.blog-article article > div:last-child,
+    body.blog-article figcaption { color: #714538; }
+    body.blog-article img { border-radius: 0; }
     .prose-content {
       line-height: 1.85;
       font-size: 1.0625rem;
     }
+    body.blog-article .prose-content { color: #3d2922; font-family: Arial, Helvetica, sans-serif; }
+    body.blog-article .prose-content h1,
+    body.blog-article .prose-content h2,
+    body.blog-article .prose-content h3,
+    body.blog-article .prose-content h4,
+    body.blog-article .prose-content h5,
+    body.blog-article .prose-content h6 {
+      color: #714538;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+    }
+    body.blog-article .prose-content a,
+    body.blog-article article > div:last-child a { color: #714538; }
+    body.blog-article .prose-content blockquote { border-left-color: #c7ac96; color: #714538; }
+    body.blog-article .prose-content code:not(pre code),
+    body.blog-article .prose-content th { background: #e9ddcb; }
+    body.blog-article .prose-content th,
+    body.blog-article .prose-content td { border-color: #c7ac96; }
+    html.dark body.blog-article { color: #3d2922; }
+    html.dark body.blog-article header,
+    html.dark body.blog-article footer,
+    html.dark body.blog-article article > div:last-child { border-color: #c7ac96; }
+    html.dark body.blog-article header a,
+    html.dark body.blog-article header button,
+    html.dark body.blog-article footer a,
+    html.dark body.blog-article footer p,
+    html.dark body.blog-article article time,
+    html.dark body.blog-article article > div:first-child span,
+    html.dark body.blog-article article > div:last-child a,
+    html.dark body.blog-article figcaption { color: #714538; }
 
     .prose-content h2 {
       font-size: 1.5rem;
