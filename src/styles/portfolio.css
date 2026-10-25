@@ -81,6 +81,7 @@ html,body{margin:0;padding:0;background:#f6efe3}button{cursor:pointer}img{max-wi
 #ak-refined .ak-x-link svg,#ak-refined .ak-github-link svg{width:17px;height:17px;fill:currentColor}
 #ak-refined dialog{width:min(1080px,94%);max-height:88vh;overflow:auto;padding:30px;border:1px solid var(--ak-line);background:var(--ak-bg);color:var(--ak-ink)}
 #ak-refined dialog[data-view="photo"]{display:grid;place-items:center;width:max-content;max-width:calc(100vw - 24px);height:auto;max-height:88vh;overflow:visible;padding:0;border:0;background:transparent;box-shadow:none}
+#ak-refined dialog:not([open]){display:none}
 #ak-refined dialog[data-view="photo"] .ak-dialog-bar,#ak-refined dialog[data-view="photo"] #ak-dialog-kicker,#ak-refined dialog[data-view="photo"] #ak-dialog-title{display:none}
 #ak-refined dialog::backdrop{background:#09133dbb}
 #ak-refined .ak-dialog-bar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}
