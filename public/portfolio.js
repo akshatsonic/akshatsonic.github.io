@@ -39,6 +39,8 @@
     const image = el('img', 'ak-photo-image');
     image.src = photo.src;
     image.alt = '';
+    image.width = photo.width;
+    image.height = photo.height;
     image.loading = 'lazy';
     image.decoding = 'async';
     button.append(image, el('span', 'ak-photo-label', `${photo.title} ↗`));
@@ -224,7 +226,10 @@
   [['ak-blog-track', 'writing'], ['ak-photo-track', 'photos']].forEach(([id, kind]) => {
     const track = document.getElementById(id);
     const group = el('div', 'ak-group');
-    (kind === 'writing' ? posts : photos).forEach((_, index) => group.append(card(kind, index, true)));
+    const previewIndices = kind === 'writing'
+      ? posts.map((_, index) => index)
+      : Array.from({ length: Math.min(14, photos.length) }, (_, index) => Math.floor(index * photos.length / Math.min(14, photos.length)));
+    previewIndices.forEach((index) => group.append(card(kind, index, true)));
     const duplicate = group.cloneNode(true);
     duplicate.setAttribute('aria-hidden', 'true');
     duplicate.querySelectorAll('a, button').forEach((control) => control.tabIndex = -1);

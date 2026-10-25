@@ -29,7 +29,7 @@ const photographData = JSON.stringify(photographs).replace(/</g, "\\u003c");
             <div class="ak-collection-grid ak-photographs-grid">
               {photographs.map((photo, index) => (
                 <button class="ak-photo" type="button" data-kind="photos" data-index={index} data-preview="false" aria-label={`Open photograph: ${photo.title}. ${photo.caption}`}>
-                  <img class="ak-photo-image" src={photo.src} alt={photo.caption} loading="lazy" decoding="async" />
+                  <img class="ak-photo-image" src={photo.src} alt={photo.caption} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
                   <span class="ak-photo-label">{photo.title} ↗</span>
                 </button>
               ))}

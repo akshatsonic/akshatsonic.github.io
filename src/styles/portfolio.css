@@ -92,10 +92,8 @@ html,body{margin:0;padding:0;background:#f6efe3}button{cursor:pointer}img{max-wi
 #ak-refined .ak-collection-grid .ak-blog{width:100%;min-height:210px}
 #ak-refined .ak-writing-grid{grid-template-columns:1fr}
 #ak-refined .ak-writing-grid .ak-blog{min-height:120px}
-#ak-refined .ak-collection-grid:not(.ak-writing-grid) .ak-photo{display:inline-block;width:100%;height:auto;aspect-ratio:1/1.08;margin:0 0 12px;break-inside:avoid;vertical-align:top}
-#ak-refined .ak-collection-grid:not(.ak-writing-grid) .ak-photo:nth-child(4n+1){aspect-ratio:1/1.28}
-#ak-refined .ak-collection-grid:not(.ak-writing-grid) .ak-photo:nth-child(4n+2){aspect-ratio:1/0.82}
-#ak-refined .ak-collection-grid:not(.ak-writing-grid) .ak-photo:nth-child(4n+3){aspect-ratio:1/1.12}
+#ak-refined .ak-collection-grid:not(.ak-writing-grid) .ak-photo{display:inline-block;width:100%;height:auto;aspect-ratio:auto;margin:0 0 12px;break-inside:avoid;vertical-align:top}
+#ak-refined .ak-collection-grid:not(.ak-writing-grid) .ak-photo-image{position:static;width:100%;height:auto;object-fit:contain}
 #ak-refined .ak-reader{font:18px/1.8 Georgia,serif;max-width:580px;margin:0 auto}
 #ak-refined .ak-reader p{margin:0 0 20px}
 #ak-refined dialog[data-view="photo"] #ak-dialog-content{display:grid;place-items:center;min-width:0;min-height:0}
