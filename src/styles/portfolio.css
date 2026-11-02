@@ -19,7 +19,7 @@ body.dr {
   --mono: ui-monospace, "SF Mono", Menlo, monospace;
   --m: 20px;
   --gap: clamp(120px, 12vw, 190px);
-  --step-h1: clamp(1.5rem, 6.6vw, 5.25rem);
+  --step-h1: clamp(1.2rem, 5.1vw, 4.5rem);
   --step-h2: clamp(1.75rem, 1rem + 3.2vw, 3.25rem);
   --step-lead: 1.375rem;
   --step-body: 1.1875rem;
@@ -116,7 +116,7 @@ html.js::before { content: ""; position: fixed; inset: 0; z-index: 9999; backgro
 .dr-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(18, 18, 18, 0.55); }
 .dr-hero-in { max-width: 1280px; margin-inline: auto; padding: 120px var(--m) clamp(40px, 7vw, 96px); }
 .dr-h1 { font-size: var(--step-h1); line-height: 1.04; }
-.dr .dr-sub { margin-top: 48px; max-width: 46ch; font-size: var(--step-body); }
+.dr .dr-sub { margin-top: 48px; max-width: 54ch; font-size: var(--step-body); }
 .dr-actions { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px 40px; }
 .dr-social { display: flex; flex-wrap: wrap; gap: 0 24px; }
 .dr-social a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); transition: color 0.2s; }
@@ -219,6 +219,11 @@ body.dr:has(.dr-bgvideo)::after { display: none; }
 .dr-step:hover { color: var(--ink); }
 .dr-x { position: absolute; top: 12px; right: 12px; min-height: 48px; padding: 0 16px; color: var(--ink); text-transform: lowercase; letter-spacing: 0.02em; font-size: var(--step-small); font-weight: 500; }
 @media (max-width: 719px) { #dr-lightbox[open] { grid-template-columns: 40px minmax(0, 1fr) 40px; } .dr-step { font-size: 1.5rem; } }
+
+@media (max-width: 640px) {
+  .dr .dr-h1 { font-size: 7vw; letter-spacing: -0.03em; line-height: 1.12; }
+  .dr .dr-sub { font-size: 1.0625rem; margin-top: 32px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .dr-bgvideo { display: none; }
