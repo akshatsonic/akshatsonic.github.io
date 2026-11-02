@@ -15,7 +15,7 @@ const post = Astro.props;
 const { Content, headings } = await post.render();
 const all = (await getCollection('blog', ({ data }) => !import.meta.env.PROD || !data.draft)).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
 const at = all.findIndex((p) => p.slug === post.slug);
-const link = (p) => (p ? { title: p.data.title, href: `/blog/${p.slug}/` } : undefined);
+const link = (p?: CollectionEntry<'blog'>) => (p ? { title: p.data.title, href: `/blog/${p.slug}/` } : undefined);
 const prev = link(all[at - 1]);
 const next = link(all[at + 1]);
 const markdownText = post.body;
