@@ -1,0 +1,23 @@
+---
+const { current = "" } = Astro.props;
+const links: [string, string][] = [
+  ["Photographs", "/photographs/"],
+  ["Films", "/#films"],
+  ["Writing", "/#writing"],
+  ["About", "/#about"],
+  ["Contact", "/#contact"],
+];
+---
+
+<header class="dr-nav">
+  <a class="dr-mark" href="/">Akshat Soni</a>
+  <nav class="dr-links" aria-label="Primary">
+    {links.map(([t, h]) => <a href={h} aria-current={current === h ? "page" : undefined}>{t}</a>)}
+  </nav>
+  <details class="dr-menu">
+    <summary>Menu</summary>
+    <nav aria-label="Menu">
+      {links.map(([t, h]) => <a href={h} aria-current={current === h ? "page" : undefined}>{t}</a>)}
+    </nav>
+  </details>
+</header>

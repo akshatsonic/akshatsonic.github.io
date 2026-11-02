@@ -27,3 +27,4 @@ pnpm-debug.log*
 .replit
 .gstack/
 .playwright-mcp/
+.taste-skill/

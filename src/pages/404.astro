@@ -1,20 +1,26 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import Fonts from "../components/Fonts.astro";
+import Nav from "../components/Nav.astro";
+import Foot from "../components/Foot.astro";
+import "../styles/portfolio.css";
 ---
 
 <html lang="en">
   <head>
     <BaseHead title="404 — Page not found" description="This page doesn't exist." />
+    <Fonts />
   </head>
-  <body class="max-w-2xl mx-auto px-6 py-4 min-h-screen text-gray-900 dark:text-gray-100 transition-colors duration-200">
-    <Header />
-    <main class="flex flex-col items-start gap-4 mt-16">
-      <h1 class="text-6xl font-bold font-heading text-sage-300 dark:text-sage-700">404</h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400">This page doesn't exist.</p>
-      <a href="/" class="mt-4 text-sm text-sage-600 dark:text-sage-400 hover:underline">← Back home</a>
+  <body class="dr">
+    <Nav />
+    <main class="dr-hero">
+      <img class="dr-bgvideo" src="/portfolio-assets/video/hero.jpg" alt="" width="1280" height="672" />
+      <div class="dr-hero-in">
+      <h1 class="dr-h1"><span class="mask"><span>Lost in</span></span><span class="mask"><span>the dark.</span></span></h1>
+      <p class="dr-sub" data-late>This page doesn't exist. The lit ones are on the home page.</p>
+      <div class="dr-actions" data-late><a class="dr-btn" href="/">Back home</a></div>
+      </div>
     </main>
-    <Footer />
+    <Foot />
   </body>
 </html>
