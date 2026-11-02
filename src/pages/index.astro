@@ -8,7 +8,7 @@ import { getCollection } from "astro:content";
 import { photographs } from "../data/photographs.js";
 import "../styles/portfolio.css";
 
-const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = (await getCollection("blog", ({ data }) => !import.meta.env.PROD || !data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
 const featured = [14, 74, 10, 4].map((i) => ({ i, p: photographs[i] }));
 const photoData = JSON.stringify(photographs).replace(/</g, "\\u003c");
@@ -82,8 +82,11 @@ const social: [string, string][] = [
 
       <section class="dr-sec" id="writing">
         <div class="dr-sec-head">
-          <h2 data-reveal>Writing</h2>
-          <p data-reveal data-delay="1">Some thoughts made it out of my head and onto the internet.</p>
+          <div class="dr-sec-title">
+            <h2 data-reveal>Writing</h2>
+            <p data-reveal data-delay="1">Some thoughts made it out of my head and onto the internet.</p>
+          </div>
+          <a class="dr-link" data-reveal data-delay="2" href="/writing/">All {posts.length} articles →</a>
         </div>
         <ul class="dr-posts">
           {posts.map((post, n) => (

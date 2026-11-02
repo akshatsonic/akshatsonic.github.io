@@ -7,13 +7,19 @@ import Foot from "../components/Foot.astro";
 import { photographs } from "../data/photographs.js";
 import "../styles/portfolio.css";
 
-type Props = CollectionEntry<"blog">["data"];
+type Link = { title: string; href: string };
+type Props = CollectionEntry<"blog">["data"] & {
+  headings?: { depth: number; slug: string; text: string }[];
+  prev?: Link;
+  next?: Link;
+};
 
-const { title, description, pubDate, heroImage, heroImageTitle, readTime } = Astro.props;
+const { title, description, pubDate, heroImage, heroImageTitle, readTime, headings = [], prev, next } = Astro.props;
 // A different photograph of mine behind each post, chosen from the title.
 const pool = [0, 2, 3, 4, 5, 6, 7, 8, 10, 11, 9, 1];
 const seed = [...title].reduce((a, c) => a + c.charCodeAt(0), 0);
 const bg = photographs[pool[seed % pool.length]].src;
+const toc = headings.length >= 2 ? headings : [];
 ---
 
 <html lang="en">
@@ -23,56 +29,150 @@ const bg = photographs[pool[seed % pool.length]].src;
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
   </head>
   <body class="dr blog-article" style={`--bgimg: url(${bg})`}>
-    <Nav current="/#writing" />
+    <div class="read-progress" aria-hidden="true"></div>
+    <Nav current="/writing/" />
     <main class="post">
-      <article>
+      <header class="post-head">
+        <a class="post-back" href="/writing/">← all writing</a>
         <h1><span class="mask"><span>{title}</span></span></h1>
         <p class="post-meta" data-late>
           <time datetime={pubDate.toISOString()}>{pubDate.toLocaleDateString("en-us", { year: "numeric", month: "long", day: "numeric" })}</time>
           {readTime && <span>{readTime} read</span>}
         </p>
-        {heroImage && (
-          <figure class="post-hero" data-late>
-            <img src={heroImage} alt={title} />
-            {heroImageTitle && <figcaption set:html={heroImageTitle} />}
-          </figure>
-        )}
-        <div class="prose-content">
+      </header>
+      {heroImage && (
+        <figure class="post-hero" data-late>
+          <img src={heroImage} alt={title} />
+          {heroImageTitle && <figcaption set:html={heroImageTitle} />}
+        </figure>
+      )}
+      <div class="post-body">
+        <article class="prose-content">
+          {toc.length > 0 && (
+            <details class="toc-m">
+              <summary>on this page</summary>
+              <ol>{toc.map((h) => <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+            </details>
+          )}
           <slot />
-        </div>
-      </article>
+        </article>
+        {toc.length > 0 && (
+          <aside class="toc" aria-label="On this page">
+            <p>on this page</p>
+            <ol>{toc.map((h) => <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+          </aside>
+        )}
+      </div>
+      {(prev || next) && (
+        <nav class="post-more" aria-label="More writing">
+          {prev ? <a href={prev.href}><span>earlier post</span><strong>{prev.title}</strong></a> : <span />}
+          {next ? <a class="r" href={next.href}><span>later post</span><strong>{next.title}</strong></a> : <span />}
+        </nav>
+      )}
     </main>
     <Foot />
+    <script is:inline>
+      (() => {
+        const bar = document.querySelector('.read-progress');
+        const doc = document.documentElement;
+        let tick = false;
+        const update = () => {
+          tick = false;
+          const max = doc.scrollHeight - innerHeight;
+          bar.style.transform = `scaleX(${max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0})`;
+        };
+        addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(update); } }, { passive: true });
+        update();
+
+        // Highlight the section being read in the contents list.
+        const links = [...document.querySelectorAll('.toc a')];
+        const heads = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1)))).filter(Boolean);
+        if (heads.length && 'IntersectionObserver' in window) {
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((en) => {
+              if (!en.isIntersecting) return;
+              links.forEach((a) => a.removeAttribute('aria-current'));
+              const a = links.find((l) => decodeURIComponent(l.hash.slice(1)) === en.target.id);
+              if (a) a.setAttribute('aria-current', 'true');
+            });
+          }, { rootMargin: '-15% 0px -75% 0px' });
+          heads.forEach((h) => io.observe(h));
+        }
+      })();
+    </script>
   </body>
 </html>
 
 <style is:inline>
-  body.blog-article { --veil: rgba(18, 18, 18, 0.9); }
-  .post { padding: calc(72px + clamp(24px, 5vw, 80px)) var(--m) 0; }
-  .post article { max-width: 1120px; margin-inline: auto; }
-  .post h1 { font-size: clamp(1.9rem, 1rem + 4.6vw, 4.25rem); line-height: 1.08; overflow-wrap: break-word; }
-  .post-meta { display: flex; gap: 20px; margin-top: 28px; color: var(--muted); font-size: var(--step-small); }
-  .post-hero { margin: 48px 0 0; }
-  .post-hero img { width: 100%; height: auto; }
-  .post-hero figcaption { margin-top: 12px; color: var(--muted); font-size: var(--step-small); }
-  .prose-content { max-width: 100ch; margin-top: 56px; line-height: 1.7; overflow-wrap: break-word; }
-  .prose-content p { margin: 0 0 1.35em; }
-  .prose-content h2, .prose-content h3, .prose-content h4 { font-family: var(--head); font-weight: 400; letter-spacing: -0.015em; line-height: 1.1; margin: 2.2em 0 0.7em; }
-  .prose-content h2 { font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); }
-  .prose-content h3 { font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem); }
-  .prose-content h4 { font-size: 1.25rem; }
-  .prose-content a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-  .prose-content a:hover { text-decoration: none; }
-  .prose-content ul, .prose-content ol { margin: 0 0 1.35em; padding-left: 1.5em; }
+  body.blog-article { --veil: rgba(18, 18, 18, 0.95); --read: #e9e9e9; }
+  .read-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--ink); transform: scaleX(0); transform-origin: 0 50%; z-index: 40; pointer-events: none; }
+
+  .post { max-width: 1120px; margin-inline: auto; padding: calc(72px + clamp(16px, 4vw, 56px)) var(--m) 0; }
+  .post-back { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); transition: color 0.2s; }
+  .post-back:hover { color: var(--ink); }
+  .post h1 { margin-top: 12px; font-size: clamp(1.9rem, 1rem + 4.2vw, 4rem); line-height: 1.1; overflow-wrap: break-word; max-width: 22ch; }
+  .post .post-meta { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 28px; color: var(--muted); font-size: var(--step-small); }
+  .post .post-hero { margin: clamp(32px, 5vw, 64px) 0 0; }
+  .post .post-hero img { width: 100%; height: auto; max-height: 70svh; object-fit: cover; }
+  .post .post-hero figcaption { margin-top: 12px; color: var(--muted); font-size: var(--step-small); }
+
+  /* Reading column: about 68 characters, with the contents list beside it */
+  .post-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 56px; margin-top: clamp(40px, 6vw, 88px); }
+  @media (min-width: 1100px) { .post-body { grid-template-columns: minmax(0, 700px) 240px; justify-content: space-between; } }
+  .prose-content { font-size: 1.1875rem; line-height: 1.75; color: var(--read); overflow-wrap: break-word; }
+  @media (min-width: 720px) { .prose-content { font-size: 1.3125rem; } }
+  .prose-content p { margin: 0 0 1.4em; }
+  .prose-content strong { color: var(--ink); font-weight: 500; }
+  .prose-content h2, .prose-content h3, .prose-content h4 { font-family: var(--font); font-weight: 500; color: var(--ink); letter-spacing: -0.01em; line-height: 1.2; scroll-margin-top: 88px; }
+  .prose-content h2 { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.25rem); margin: 2.2em 0 0.7em; }
+  .prose-content h3 { font-size: clamp(1.35rem, 1.1rem + 0.9vw, 1.7rem); margin: 1.9em 0 0.6em; }
+  .prose-content h4 { font-size: 1.2rem; margin: 1.6em 0 0.5em; }
+  .prose-content a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 4px; transition: text-decoration-color 0.2s; }
+  .prose-content a:hover { text-decoration-color: var(--ink); }
+  .prose-content ul, .prose-content ol { margin: 0 0 1.4em; padding-left: 1.4em; }
   .prose-content ul { list-style: disc; } .prose-content ol { list-style: decimal; }
-  .prose-content li { margin-bottom: 0.4em; }
-  .prose-content blockquote { margin: 1.75em 0; padding: 0.4em 0 0.4em 1.5em; border-left: 3px solid var(--ink); color: var(--muted); font-style: italic; }
-  .prose-content pre { padding: 1.25em; overflow-x: auto; margin: 1.75em 0; border-radius: 0; font-size: 0.9rem; }
+  .prose-content li { margin-bottom: 0.5em; padding-left: 0.2em; }
+  .prose-content li::marker { color: var(--muted); }
+  .prose-content blockquote { margin: 1.8em 0; padding: 0.2em 0 0.2em 1.4em; border-left: 3px solid var(--ink); color: var(--ink); font-style: italic; }
+  .prose-content blockquote p:last-child { margin-bottom: 0; }
+  .prose-content pre { padding: 1.1em 1.25em; overflow-x: auto; margin: 1.8em 0; border-radius: 0; font-size: 0.9rem; line-height: 1.6; tab-size: 2; }
   .prose-content code, .prose-content pre { font-family: var(--mono); }
-  .prose-content code:not(pre code) { background: var(--surface); padding: 0.15em 0.4em; font-size: 0.875em; }
-  .prose-content table { width: 100%; border-collapse: collapse; margin: 1.75em 0; font-size: 0.9375rem; display: block; overflow-x: auto; }
-  .prose-content th, .prose-content td { padding: 0.55em 0.8em; border: 1px solid #2b241d; text-align: left; }
+  .prose-content code:not(pre code) { background: var(--surface-2); padding: 0.12em 0.4em; font-size: 0.85em; color: var(--ink); }
+  .prose-content table { width: 100%; border-collapse: collapse; margin: 1.8em 0; font-size: 0.95rem; display: block; overflow-x: auto; }
+  .prose-content th, .prose-content td { padding: 0.6em 0.9em; border: 1px solid #2f2f2f; text-align: left; }
   .prose-content th { background: var(--surface); font-weight: 500; }
-  .prose-content img { max-width: 100%; height: auto; margin: 1.5em 0; }
-  .prose-content .katex-display { overflow-x: auto; overflow-y: hidden; }
+  .prose-content img { max-width: 100%; height: auto; margin: 1.8em auto; }
+  .prose-content .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
+
+  /* Contents: a sticky rail on desktop, a collapsible list on phones */
+  .toc { display: none; }
+  @media (min-width: 1100px) {
+    .toc { display: block; position: sticky; top: 96px; align-self: start; max-height: calc(100svh - 128px); overflow: auto; font-size: 0.95rem; line-height: 1.4; }
+    .toc p { margin: 0 0 14px; color: var(--muted); }
+    .toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+    .toc li.d3 { padding-left: 14px; }
+    .toc a { display: block; padding: 7px 0; color: var(--muted); transition: color 0.2s; }
+    .toc a:hover, .toc a[aria-current] { color: var(--ink); }
+    .toc a[aria-current] { font-weight: 500; }
+    .toc-m { display: none; }
+  }
+  .toc-m { margin: 0 0 2em; background: var(--surface); }
+  .toc-m summary { display: flex; align-items: center; min-height: 52px; padding: 0 18px; cursor: pointer; list-style: none; font-size: 1rem; }
+  .toc-m summary::-webkit-details-marker { display: none; }
+  .toc-m summary::after { content: "+"; margin-left: auto; }
+  .toc-m[open] summary::after { content: "–"; }
+  .toc-m ol { list-style: none; margin: 0; padding: 0 18px 12px; }
+  .toc-m li { margin: 0; padding: 0; }
+  .toc-m li.d3 { padding-left: 16px; }
+  .toc-m a { display: block; padding: 10px 0; font-size: 1rem; line-height: 1.35; color: var(--muted); text-decoration: none; }
+  .toc-m a:hover { color: var(--ink); }
+
+  /* Earlier / later */
+  .post .post-more { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: clamp(64px, 9vw, 120px); }
+  @media (min-width: 720px) { .post .post-more { grid-template-columns: 1fr 1fr; } }
+  .post .post-more a { display: grid; gap: 8px; align-content: start; min-height: 120px; padding: 22px 24px; background: var(--surface); transition: background-color 0.3s, transform 0.4s var(--ease); }
+  .post .post-more a:hover { background: var(--surface-2); transform: translateY(-3px); }
+  .post .post-more a.r { text-align: right; }
+  .post .post-more span { color: var(--muted); font-size: var(--step-small); }
+  .post .post-more strong { font-family: var(--head); font-weight: 400; font-size: 1.25rem; line-height: 1.25; }
 </style>

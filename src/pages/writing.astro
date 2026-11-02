@@ -1,0 +1,55 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Fonts from "../components/Fonts.astro";
+import Nav from "../components/Nav.astro";
+import Foot from "../components/Foot.astro";
+import { getCollection } from "astro:content";
+import "../styles/portfolio.css";
+
+const posts = (await getCollection("blog", ({ data }) => !import.meta.env.PROD || !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const years = [...new Set(posts.map((p) => p.data.pubDate.getFullYear()))];
+const day = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+let n = 0;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Writing — Akshat Soni" description="Everything I've written: notes on systems, the JVM, databases and AI." image="/portfolio-assets/instagram-posts/18044205263439212.webp" />
+    <Fonts />
+  </head>
+  <body class="dr" style="--veil: rgba(18, 18, 18, 0.93)">
+    <Nav current="/writing/" />
+    <main class="dr-page">
+      <h1 class="dr-h1"><span class="mask"><span>Thoughts,</span></span><span class="mask"><span>written down.</span></span></h1>
+      <p class="dr-sub" data-late>Some thoughts made it out of my head and onto the internet.</p>
+
+      {years.map((y) => (
+        <section class="dr-year" aria-labelledby={`y${y}`}>
+          <h2 id={`y${y}`} data-reveal>{y}</h2>
+          <ul class="dr-wlist">
+            {posts.filter((p) => p.data.pubDate.getFullYear() === y).map((p) => (
+              <li data-reveal data-delay={String(n++ % 3)}>
+                <a href={`/blog/${p.slug}/`}>
+                  <span class="meta">
+                    <time datetime={p.data.pubDate.toISOString()}>{day(p.data.pubDate)}</time>
+                    <span class="tag">{(p.data.tags?.[0] ?? "note").replace(/_/g, " ")}</span>
+                  </span>
+                  <span class="body">
+                    <strong>{p.data.title}</strong>
+                    <span>{p.data.description}</span>
+                  </span>
+                  {p.data.heroImage && <span class="thumb"><img src={p.data.heroImage} alt="" loading="lazy" decoding="async" /></span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </main>
+    <Foot />
+    <script is:inline src="/portfolio.js" defer></script>
+  </body>
+</html>

@@ -1,6 +1,9 @@
 (() => {
-  const photos = JSON.parse(document.getElementById('ak-photo-data').textContent);
+  // Lightbox: only on pages that have the photo list and the dialog.
+  const photoData = document.getElementById('ak-photo-data');
   const dialog = document.getElementById('dr-lightbox');
+  if (photoData && dialog) {
+  const photos = JSON.parse(photoData.textContent);
   const img = dialog.querySelector('img');
   const cap = dialog.querySelector('figcaption');
   let current = 0;
@@ -41,6 +44,7 @@
     x0 = null;
     if (Math.abs(dx) > 45) show(current + (dx < 0 ? 1 : -1));
   }, { passive: true });
+  }
 
   // Entrances: one observer, staggered by data-delay, once.
   const items = document.querySelectorAll('[data-reveal]');

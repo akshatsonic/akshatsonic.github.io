@@ -3,7 +3,7 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection('blog', ({ data }) => !import.meta.env.PROD || !data.draft);
 	return posts.map((post) => ({
 		params: { slug: post.slug },
 		props: post,
@@ -12,13 +12,18 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
+const all = (await getCollection('blog', ({ data }) => !import.meta.env.PROD || !data.draft)).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
+const at = all.findIndex((p) => p.slug === post.slug);
+const link = (p) => (p ? { title: p.data.title, href: `/blog/${p.slug}/` } : undefined);
+const prev = link(all[at - 1]);
+const next = link(all[at + 1]);
 const markdownText = post.body;
 const wordCount = markdownText.split(/\s+/).filter(Boolean).length;
 const minOrSec = Math.ceil(wordCount / 200) < 1 ? ' sec' : ' min';
 post.data.readTime = Math.ceil(wordCount / 200) + minOrSec;
 ---
 
-<BlogPost {...post.data}>
+<BlogPost {...post.data} headings={headings.filter((h) => h.depth <= 3)} prev={prev} next={next}>
 	<Content />
 </BlogPost>
