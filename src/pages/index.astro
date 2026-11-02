@@ -10,7 +10,7 @@ import "../styles/portfolio.css";
 
 const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-const featured = [5, 7, 10, 4].map((i) => ({ i, p: photographs[i] }));
+const featured = [14, 74, 10, 4].map((i) => ({ i, p: photographs[i] }));
 const photoData = JSON.stringify(photographs).replace(/</g, "\\u003c");
 const social: [string, string][] = [
   ["LinkedIn", "https://linkedin.com/in/akshatsoni"],
@@ -62,7 +62,7 @@ const social: [string, string][] = [
       <section class="dr-sec" id="films">
         <div class="dr-sec-head">
           <h2 data-reveal>In motion</h2>
-          <p data-reveal data-delay="1">Short cuts from my own reels: a desk, a cup, a lens cap, and a road trip called Silence.</p>
+          <p data-reveal data-delay="1">Moving pictures of things I thought looked cooler in my head.</p>
         </div>
         <div class="dr-films">
           <figure data-reveal>
@@ -83,7 +83,7 @@ const social: [string, string][] = [
       <section class="dr-sec" id="writing">
         <div class="dr-sec-head">
           <h2 data-reveal>Writing</h2>
-          <p data-reveal data-delay="1">Notes on systems, the JVM, databases and AI. {posts.length} articles so far.</p>
+          <p data-reveal data-delay="1">Some thoughts made it out of my head and onto the internet.</p>
         </div>
         <ul class="dr-posts">
           {posts.map((post, n) => (
@@ -101,9 +101,10 @@ const social: [string, string][] = [
 
       <section class="dr-sec dr-about" id="about">
         <div class="dr-about-text">
-          <h2 data-reveal>Systems by day.<br />Light by night.</h2>
-          <p data-reveal data-delay="1">I'm a senior software engineer who likes understanding how things really work: databases, the JVM, load balancers, and lately embeddings. At work I build and run backend systems.</p>
-          <p data-reveal data-delay="2">Away from the desk I carry a camera to river ceremonies, market lanes and festival nights, looking for the one frame where the light does the talking. Both habits start from the same place: curiosity.</p>
+          <h2 data-reveal>A collection of side quests.</h2>
+          <p data-reveal data-delay="1">I build software. Sometimes it works.</p>
+          <p data-reveal data-delay="2">The rest of my personality involves books, photography, chai, and developing an unnecessarily deep interest in whatever caught my attention this week.</p>
+          <p data-reveal data-delay="3">I made this website because apparently having hobbies wasn't enough. I needed somewhere to put them.</p>
         </div>
         <figure class="dr-portrait" data-reveal data-delay="1">
           <img src="/portfolio-assets/akshat-portrait.png" alt="Akshat smiling" width="500" height="500" loading="lazy" />
@@ -114,7 +115,7 @@ const social: [string, string][] = [
         <div class="dr-chat-text">
           <h2 data-reveal>Let's chat.</h2>
           <p data-reveal data-delay="1">Engineering, photographs and the things in between. If you have a problem, a frame or a good cup of chai in mind, say hello.</p>
-          <a class="dr-btn" data-reveal data-delay="2" href="https://linkedin.com/in/akshatsoni" target="_blank" rel="noopener noreferrer">Say hello on LinkedIn</a>
+          <a class="dr-btn" data-reveal data-delay="2" href="https://x.com/akshatsonic" target="_blank" rel="noopener noreferrer">Say hello on X</a>
         </div>
         <dl class="dr-stats" data-reveal data-delay="1">
           <div><dd>{photographs.length}</dd><dt>photographs</dt></div>
