@@ -51,7 +51,7 @@ const json = (res, code, obj) => { res.writeHead(code, { 'content-type': 'applic
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
   try {
-    if (req.method === 'GET' && url.pathname === '/') { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); return res.end(PAGE); }
+    if (req.method === 'GET' && url.pathname === '/') { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); return res.end(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'writer.html'))); }
 
     if (req.method === 'GET' && url.pathname === '/api/posts') {
       const list = fs.readdirSync(POSTS).filter((f) => f.endsWith('.md')).sort().reverse().map((f) => {
@@ -112,49 +112,3 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, '127.0.0.1', () => console.log(`Writer running at http://localhost:${PORT}`));
-
-const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Writer</title>
-<style>
-:root{--bg:#121212;--s:#1c1c1c;--s2:#2a2a2a;--ink:#fafafa;--mut:#b3b3b3}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Georgia,serif}
-header{display:flex;flex-wrap:wrap;gap:10px;padding:12px 16px;background:var(--s);align-items:center}
-input,select,textarea,button{font:inherit;color:inherit;background:var(--s2);border:0;padding:8px 10px}
-button{cursor:pointer;background:var(--ink);color:var(--bg);padding:8px 16px}button.g{background:var(--s2);color:var(--ink)}
-header input.t{flex:1 1 280px;font-size:1.1rem}header input.d{flex:2 1 320px}header input.g{flex:1 1 160px}
-label{display:flex;gap:6px;align-items:center;color:var(--mut)}
-main{display:grid;grid-template-columns:1fr 1fr;height:calc(100vh - 124px)}
-@media(max-width:800px){main{grid-template-columns:1fr;height:auto}#ed{height:60vh}}
-#ed{width:100%;height:100%;resize:none;padding:20px;font:16px/1.7 ui-monospace,Menlo,monospace;background:var(--bg)}
-#pv{overflow:auto;padding:20px 28px;background:#161616}#pv img{max-width:100%}#pv pre{background:var(--s);padding:12px;overflow:auto}
-#msg{padding:8px 16px;color:var(--mut);min-height:36px}#msg.err{color:#ff8a80}
-</style></head><body>
-<header>
-<select id="pick"><option value="">New post</option></select>
-<input class="t" id="title" placeholder="Title">
-<input class="d" id="desc" placeholder="One-line description">
-<input class="g" id="tags" placeholder="tags, comma separated">
-<label><input type="checkbox" id="draft" checked> Draft</label>
-<button class="g" id="save">Save</button><button id="pub">Publish</button>
-</header>
-<div id="msg">Paste or drop images into the editor. Save writes the file; Publish commits and pushes.</div>
-<main><textarea id="ed" placeholder="Write in Markdown…"></textarea><div id="pv"></div></main>
-<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-<script>
-const $=(i)=>document.getElementById(i);let file=null,pubDate=null;
-const say=(t,e)=>{$('msg').textContent=t;$('msg').className=e?'err':''};
-const render=()=>{$('pv').innerHTML=window.marked?marked.parse($('ed').value):''};
-$('ed').addEventListener('input',render);
-async function api(p,o){const r=await fetch(p,o);const j=await r.json();if(!r.ok)throw new Error(j.error||'failed');return j}
-async function list(){const l=await api('/api/posts');$('pick').innerHTML='<option value="">New post</option>'+l.map(p=>'<option value="'+p.file+'">'+(p.draft?'[draft] ':'')+p.title.replace(/</g,'&lt;')+'</option>').join('');if(file)$('pick').value=file}
-$('pick').onchange=async()=>{const f=$('pick').value;if(!f){file=null;pubDate=null;['title','desc','tags','ed'].forEach(i=>$(i).value='');$('draft').checked=true;return render()}
- const p=await api('/api/post?file='+encodeURIComponent(f));file=p.file;pubDate=p.pubDate;$('title').value=p.title||'';$('desc').value=p.description||'';$('tags').value=(p.tags||[]).join(', ');$('draft').checked=!!p.draft;$('ed').value=p.body||'';render()};
-async function save(){const body={file,pubDate,title:$('title').value,description:$('desc').value,tags:$('tags').value.split(',').map(s=>s.trim()).filter(Boolean),draft:$('draft').checked,body:$('ed').value};
- const r=await api('/api/save',{method:'POST',body:JSON.stringify(body)});file=r.file;pubDate=r.pubDate;await list();say('Saved '+file);return r}
-$('save').onclick=()=>save().catch(e=>say(e.message,1));
-$('pub').onclick=async()=>{try{await save();say('Publishing…');await api('/api/publish',{method:'POST',body:JSON.stringify({file})});say('Published. The site rebuilds in a minute or two.')}catch(e){say(e.message,1)}};
-async function upload(f){const r=await api('/api/image?name='+encodeURIComponent(f.name||'pasted.png'),{method:'POST',body:f});const t='![]('+r.url+')';const e=$('ed'),s=e.selectionStart;e.value=e.value.slice(0,s)+t+e.value.slice(e.selectionEnd);render();say('Image added')}
-$('ed').addEventListener('paste',e=>{const f=[...e.clipboardData.files].find(x=>x.type.startsWith('image/'));if(f){e.preventDefault();upload(f).catch(x=>say(x.message,1))}});
-$('ed').addEventListener('drop',e=>{const f=[...e.dataTransfer.files].find(x=>x.type.startsWith('image/'));if(f){e.preventDefault();upload(f).catch(x=>say(x.message,1))}});
-window.addEventListener('load',()=>{list();render()});
-</script></body></html>`;
