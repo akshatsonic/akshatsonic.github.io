@@ -9,12 +9,30 @@
   let current = 0;
   let opener = null;
 
-  function show(i) {
+  const ghost = dialog.querySelector('.dr-ghost');
+  const frame = dialog.querySelector('.dr-frame');
+  const slow = matchMedia('(prefers-reduced-motion: reduce)');
+  let ticket = 0;
+
+  // Image and caption change together, only once the new photo has decoded.
+  // Until then the old frame dissolves out and a soft placeholder breathes at the new photo's size.
+  async function show(i) {
     current = (i + photos.length) % photos.length;
     const p = photos[current];
+    const mine = ++ticket;
+    dialog.dataset.state = 'loading';
+    const fit = Math.min(frame.clientWidth / p.width, (innerHeight - 150) / p.height);
+    ghost.style.width = `${Math.round(p.width * fit)}px`;
+    ghost.style.height = `${Math.round(p.height * fit)}px`;
+    const next = new Image();
+    next.src = p.src;
+    await next.decode().catch(() => {});
+    if (mine !== ticket) return;
     img.src = p.src;
     img.alt = p.caption;
     cap.textContent = `${p.title}. ${p.caption}`;
+    dialog.dataset.state = 'ready';
+    for (const d of [1, -1]) new Image().src = photos[(current + d + photos.length) % photos.length].src;
   }
 
   document.addEventListener('click', (e) => {
