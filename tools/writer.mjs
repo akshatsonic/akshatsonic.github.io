@@ -18,7 +18,16 @@ const slugify = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-
 const stamp = (d) => d.toISOString().slice(0, 16).replace(/[-:T]/g, '');
 const prettyDate = (d) => `${MONTHS[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')} ${d.getFullYear()}`;
 const safeName = (f) => { const b = path.basename(String(f || '')); return /^[\w.-]+\.md$/.test(b) ? b : null; };
-const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+const run = (cmd, a, env) => execFileSync(cmd, a, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env });
+const git = (...a) => run('git', a);
+// Token comes from WRITER_TOKEN, or is entered in the UI on first publish. Kept in memory only. Blank = normal git credentials.
+let TOKEN = (process.env.WRITER_TOKEN || '').trim();
+function pushEnv() {
+  if (!TOKEN) return process.env;
+  const basic = Buffer.from(`x-access-token:${TOKEN}`).toString('base64');
+  return { ...process.env, GIT_CONFIG_COUNT: '2', GIT_CONFIG_KEY_0: 'credential.helper', GIT_CONFIG_VALUE_0: '',
+    GIT_CONFIG_KEY_1: 'http.https://github.com/.extraheader', GIT_CONFIG_VALUE_1: `AUTHORIZATION: basic ${basic}` };
+}
 
 function parse(raw) {
   const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
@@ -30,7 +39,8 @@ function parse(raw) {
     let v = k[2].trim();
     if (v.startsWith('[')) { try { v = JSON.parse(v); } catch { v = []; } }
     else if (v === 'true' || v === 'false') v = v === 'true';
-    else v = v.replace(/^(['"])([\s\S]*)\1$/, '$2');
+    else if (v.startsWith('"')) { try { v = JSON.parse(v); } catch { v = v.slice(1, -1); } }
+    else v = v.replace(/^(')([\s\S]*)\1$/, '$2');
     meta[k[1]] = v;
   }
   return { meta, body: m[2].replace(/^\n+/, '') };
@@ -40,6 +50,7 @@ function build(p) {
   const lines = ['---', `title: ${JSON.stringify(p.title)}`, `description: ${JSON.stringify(p.description || '')}`, `pubDate: ${JSON.stringify(p.pubDate)}`];
   if (p.tags?.length) lines.push(`tags: ${JSON.stringify(p.tags)}`);
   if (p.heroImage) lines.push(`heroImage: ${JSON.stringify(p.heroImage)}`);
+  if (p.heroImage && p.heroImageTitle) lines.push(`heroImageTitle: ${JSON.stringify(p.heroImageTitle)}`);
   if (p.draft) lines.push('draft: true');
   lines.push('---', '', p.body.trim(), '');
   return lines.join('\n');
@@ -88,6 +99,20 @@ const server = http.createServer(async (req, res) => {
       return json(res, 200, { url: `/blog-images/${out}` });
     }
 
+    if (req.method === 'GET' && url.pathname === '/api/token') return json(res, 200, { set: !!TOKEN });
+
+    if (req.method === 'POST' && url.pathname === '/api/token') {
+      const t = String(JSON.parse((await readBody(req)).toString()).token || '').trim();
+      if (!t) return json(res, 400, { error: 'Paste a token' });
+      const m = git('remote', 'get-url', 'origin').match(/github\.com[/:]([^/]+\/[^/.]+)/);
+      const r = await fetch(`https://api.github.com/repos/${m[1]}`, { headers: { Authorization: `Bearer ${t}`, Accept: 'application/vnd.github+json' } });
+      if (r.status === 401) return json(res, 400, { error: 'GitHub rejected this token (expired or mistyped)' });
+      if (!r.ok) return json(res, 400, { error: `This token cannot see ${m[1]}. Give it access to that repository.` });
+      if (!(await r.json()).permissions?.push) return json(res, 400, { error: 'This token is read-only. Set Contents to Read and write.' });
+      TOKEN = t;
+      return json(res, 200, { set: true });
+    }
+
     if (req.method === 'POST' && url.pathname === '/api/publish') {
       const { file } = JSON.parse((await readBody(req)).toString());
       const f = safeName(file);
@@ -95,8 +120,10 @@ const server = http.createServer(async (req, res) => {
       const { meta } = parse(fs.readFileSync(path.join(POSTS, f), 'utf8'));
       if (meta.draft) return json(res, 400, { error: 'Untick "Draft" and save before publishing' });
       git('add', `src/content/blog/${f}`, 'public/blog-images');
-      git('commit', '-m', `Post: ${meta.title}`, '--', `src/content/blog/${f}`, 'public/blog-images');
-      const out = git('push', 'origin', 'master');
+      const paths = [`src/content/blog/${f}`, 'public/blog-images'];
+      // Nothing staged means an earlier publish already committed it and only the push failed: push again.
+      try { git('diff', '--cached', '--quiet', '--', ...paths); } catch { git('commit', '-m', `Post: ${meta.title}`, '--', ...paths); }
+      const out = run('git', ['push', 'origin', 'master'], pushEnv());
       return json(res, 200, { ok: true, out });
     }
 
@@ -107,7 +134,9 @@ const server = http.createServer(async (req, res) => {
     }
     res.writeHead(404); res.end('not found');
   } catch (e) {
-    json(res, 500, { error: String(e.stderr || e.message || e).trim() });
+    const msg = String(e.stderr || e.message || e).trim();
+    if (TOKEN && url.pathname === '/api/publish' && /403|401|denied|Authentication failed/.test(msg)) TOKEN = ''; // ask again next time
+    json(res, 500, { error: msg });
   }
 });
 

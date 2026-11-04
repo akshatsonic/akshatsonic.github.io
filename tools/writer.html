@@ -98,6 +98,7 @@ button{cursor:pointer;border:0;background:none}
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{font-weight:500}
 .field input[type=text],.field textarea{border:0;border-radius:var(--rc);background:var(--surface);padding:9px 10px;width:100%}
+.hrow{display:flex;gap:8px}#hprev{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--rc);background:var(--surface)}
 .field textarea{resize:vertical;min-height:84px}
 .hint{color:var(--muted);font-size:12px}
 .switch{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:var(--r);background:var(--surface)}
@@ -114,6 +115,7 @@ button{cursor:pointer;border:0;background:none}
 dialog{border:0;border-radius:12px;padding:24px;max-width:380px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
 dialog::backdrop{background:rgba(0,0,0,.3)}
 dialog h2{margin:0 0 6px;font-size:16px}dialog p{margin:0 0 20px;color:var(--muted)}
+dialog input{width:100%;margin:0 0 6px;border:0;border-radius:var(--rc);background:var(--ground);padding:9px 10px}dialog .hint{display:block;min-height:18px;margin-bottom:12px;color:var(--neg)}
 dialog menu{display:flex;gap:8px;justify-content:flex-end;margin:0;padding:0}
 
 @media(max-width:1000px){.app[data-details="open"]{grid-template-columns:260px minmax(0,1fr)}.details{position:fixed;right:8px;top:8px;bottom:8px;width:300px;background:var(--ground);border-radius:var(--r);box-shadow:0 4px 16px rgba(0,0,0,.08);padding:20px}}
@@ -176,6 +178,8 @@ dialog menu{display:flex;gap:8px;justify-content:flex-end;margin:0;padding:0}
     <h2>Details</h2>
     <div class="field"><label for="desc">Description</label><textarea id="desc" placeholder="One line shown in the post list and link previews"></textarea><span class="hint" id="dcount">0 characters</span></div>
     <div class="field"><label for="tags">Tags</label><input type="text" id="tags" placeholder="databases, jvm"><span class="hint">Separate with commas</span></div>
+    <div class="field"><label for="hero">Hero image</label><input type="text" id="hero" placeholder="/blog-images/cover.jpg or https://…"><img id="hprev" alt="" hidden><div class="hrow"><button type="button" class="btn" id="hpick">Choose image…</button><button type="button" class="btn" id="hclear" hidden>Remove</button></div><input type="file" id="hfile" accept="image/*" hidden><span class="hint">Saved to blog-images and used as the cover. Or paste/drop an image here</span></div>
+    <div class="field"><label for="hcap">Hero caption</label><input type="text" id="hcap" placeholder="Photo credit or a short line"><span class="hint">HTML links allowed</span></div>
     <label class="switch"><span><b>Draft</b><span>Hidden from the live site</span></span><input class="tog" type="checkbox" id="draft" checked></label>
     <div class="pub">
       <button class="btn pri" id="pub">Publish</button>
@@ -185,7 +189,10 @@ dialog menu{display:flex;gap:8px;justify-content:flex-end;margin:0;padding:0}
 </div>
 
 <div class="toast" id="toast" role="status"></div>
-<dialog id="dlg"><h2 id="dh"></h2><p id="dp"></p><menu><button class="btn" value="no">Cancel</button><button class="btn pri" value="yes">Continue</button></menu></dialog>
+<dialog id="tdlg"><form method="dialog"><h2>GitHub token</h2><p>Publishing pushes to master with this token. Use a fine-grained token for this repository with Contents set to Read and write. It stays in memory until you stop the writer.</p>
+<input type="password" id="tok" placeholder="github_pat_…" autocomplete="off" spellcheck="false"><span class="hint" id="terr"></span>
+<menu><button class="btn" value="no">Cancel</button><button class="btn pri" value="yes">Use token</button></menu></form></dialog>
+<dialog id="dlg"><h2 id="dh"></h2><p id="dp"></p><form method="dialog"><menu><button class="btn" value="no">Cancel</button><button class="btn pri" value="yes" autofocus>Continue</button></menu></form></dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 <script>
@@ -196,9 +203,9 @@ const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','De
 function toast(m,err){const e=$('toast');e.textContent=m;e.className='toast on'+(err?' err':'');clearTimeout(t);t=setTimeout(()=>e.className='toast',err?5000:2400)}
 function mark(d,label){dirty=d;$('dot').className='dot '+(d?'dirty':file?'saved':'');$('status').textContent=label||(d?'Unsaved changes':file?'Saved':'New post')}
 async function api(p,o){const r=await fetch(p,o);const j=await r.json();if(!r.ok)throw new Error(j.error||'Request failed');return j}
-function ask(h,p){return new Promise(res=>{$('dh').textContent=h;$('dp').textContent=p;const d=$('dlg');d.onclose=()=>res(d.returnValue==='yes');d.showModal()})}
+function ask(h,p){return new Promise(res=>{$('dh').textContent=h;$('dp').textContent=p;const d=$('dlg');d.returnValue='';d.onclose=()=>res(d.returnValue==='yes');d.showModal()})}
 
-const grow=(e)=>{e.style.height='auto';e.style.height=e.scrollHeight+'px'};
+const grow=(e)=>{const p=e.closest('.write'),y=p.scrollTop;e.style.height='auto';e.style.height=e.scrollHeight+'px';p.scrollTop=y};
 function render(){
   $('pvt').textContent=$('title').value;
   $('pv').innerHTML=window.marked?marked.parse($('ed').value):'';
@@ -208,7 +215,7 @@ function render(){
   $('dcount').textContent=$('desc').value.length+' characters';
 }
 const touch=()=>{render();mark(true)};
-['title','ed','desc','tags','draft'].forEach(i=>$(i).addEventListener('input',()=>{if(i==='title'||i==='ed')grow($(i));touch()}));
+['title','ed','desc','tags','hero','hcap','draft'].forEach(i=>$(i).addEventListener('input',()=>{if(i==='title'||i==='ed')grow($(i));touch()}));
 $('title').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('ed').focus()}});
 
 /* post list */
@@ -232,7 +239,7 @@ $('find').addEventListener('input',paint);
 
 function fill(p){
   file=p.file||null;pubDate=p.pubDate||null;
-  $('title').value=p.title||'';$('desc').value=p.description||'';$('tags').value=(p.tags||[]).join(', ');
+  $('title').value=p.title||'';$('desc').value=p.description||'';$('tags').value=(p.tags||[]).join(', ');$('hero').value=p.heroImage||'';$('hcap').value=p.heroImageTitle||'';heroPaint();
   $('draft').checked=p.draft!==false&&(p.draft||!file);$('ed').value=p.body||'';
   grow($('title'));grow($('ed'));render();mark(false);paint();
 }
@@ -243,15 +250,26 @@ $('new').onclick=async()=>{if(await guard()){fill({draft:true});$('title').focus
 /* save + publish */
 async function save(){
   const r=await api('/api/save',{method:'POST',body:JSON.stringify({file,pubDate,title:$('title').value,description:$('desc').value,
-    tags:$('tags').value.split(',').map(s=>s.trim()).filter(Boolean),draft:$('draft').checked,body:$('ed').value})});
+    tags:$('tags').value.split(',').map(s=>s.trim()).filter(Boolean),heroImage:$('hero').value.trim(),heroImageTitle:$('hcap').value.trim(),draft:$('draft').checked,body:$('ed').value})});
   file=r.file;pubDate=r.pubDate;mark(false,'Saved just now');await list();return r}
 const doSave=()=>save().then(()=>toast('Saved')).catch(e=>toast(e.message,1));
 $('save').onclick=doSave;
 $('pub').onclick=async()=>{
   if($('draft').checked)return toast('Turn off Draft first, then publish.',1);
   if(!(await ask('Publish this post?','It is saved, committed and pushed to master, then goes live when the site rebuilds.')))return;
-  try{await save();mark(false,'Publishing…');await api('/api/publish',{method:'POST',body:JSON.stringify({file})});mark(false,'Published');toast('Published. Live in a minute or two.')}catch(e){mark(dirty);toast(e.message,1)}};
+  try{if(!(await ensureToken()))return;await save();mark(false,'Publishing…');await api('/api/publish',{method:'POST',body:JSON.stringify({file})});mark(false,'Published');toast('Published. Live in a minute or two.')}catch(e){mark(dirty);toast(e.message,1)}};
 
+async function ensureToken(){
+  if((await api('/api/token')).set)return true;
+  const d=$('tdlg');
+  for(;;){
+    d.returnValue='';$('tok').value='';
+    await new Promise(r=>{d.onclose=r;d.showModal()});
+    if(d.returnValue!=='yes')return false;
+    try{await api('/api/token',{method:'POST',body:JSON.stringify({token:$('tok').value})});$('terr').textContent='';return true}
+    catch(e){$('terr').textContent=e.message}
+  }
+}
 /* view modes + details */
 document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{
   $('panes').dataset.mode=b.dataset.mode;
@@ -280,6 +298,17 @@ window.addEventListener('keydown',e=>{
   if(k==='s'){e.preventDefault();doSave()}
   else if(document.activeElement===ed&&{b:'bold',i:'italic',k:'link'}[k]){e.preventDefault();ACT[{b:'bold',i:'italic',k:'link'}[k]]()}});
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+
+/* hero image */
+const heroPaint=()=>{const v=$('hero').value.trim();$('hprev').hidden=!v;if(v)$('hprev').src=v;$('hclear').hidden=!v;$('hpick').textContent=v?'Replace image…':'Choose image…'};
+async function heroUp(f){const r=await api('/api/image?name='+encodeURIComponent(f.name||'cover.png'),{method:'POST',body:f});$('hero').value=r.url;heroPaint();touch();toast('Cover set')}
+$('hpick').onclick=()=>$('hfile').click();
+$('hfile').onchange=()=>{const f=$('hfile').files[0];if(f)heroUp(f).catch(x=>toast(x.message,1));$('hfile').value=''};
+$('hclear').onclick=()=>{$('hero').value='';heroPaint();touch()};
+$('hero').addEventListener('input',heroPaint);
+$('hero').closest('.field').addEventListener('paste',e=>{const f=[...e.clipboardData.files].find(x=>x.type.startsWith('image/'));if(f){e.preventDefault();heroUp(f).catch(x=>toast(x.message,1))}});
+$('hero').closest('.field').addEventListener('dragover',e=>e.preventDefault());
+$('hero').closest('.field').addEventListener('drop',e=>{const f=[...e.dataTransfer.files].find(x=>x.type.startsWith('image/'));if(f){e.preventDefault();heroUp(f).catch(x=>toast(x.message,1))}});
 
 /* images */
 async function upload(f){
