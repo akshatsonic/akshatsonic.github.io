@@ -4,6 +4,7 @@ description: "Demystifying evals and breaking myths"
 pubDate: "Nov 04 2026"
 tags: ["llm","ai"]
 heroImage: "/blog-images/1793791709150-pexels-satoshi-7526819.jpg"
+heroImageTitle: "Photo by <a href=\"https://www.pexels.com/@satoshi/\">Satoshi Hirayama</a>"
 ---
 
 Recently I created my own coding agent that fits my workflows and was armed with curated skills and system prompts. I had proper guardrails in place in the prompt and was ready to fire the skill for my day to day implementation tasks. I had so much trust in the agent that I  started doing AFKs.
