@@ -64,6 +64,24 @@
   }, { passive: true });
   }
 
+  // Phone menu: close it after a link, so same-page anchors don't leave it open.
+  const menu = document.querySelector('.dr-menu');
+  menu?.addEventListener('click', (e) => { if (e.target.closest('nav a')) menu.open = false; });
+
+  // Stats count up once when they appear; the markup keeps the final number.
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const count = (el) => {
+    const end = Number(el.textContent);
+    const t0 = performance.now();
+    const tick = (t) => {
+      const k = Math.min(1, (t - t0) / 1200);
+      el.textContent = Math.round(end * (k === 1 ? 1 : 1 - 2 ** (-10 * k)));
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    el.textContent = 0;
+    requestAnimationFrame(tick);
+  };
+
   // Entrances: one observer, staggered by data-delay, once.
   const items = document.querySelectorAll('[data-reveal]');
   if ('IntersectionObserver' in window) {
@@ -71,6 +89,7 @@
       entries.forEach((en) => {
         if (!en.isIntersecting) return;
         en.target.classList.add('in');
+        if (!calm) en.target.querySelectorAll('.dr-stats dd').forEach(count);
         io.unobserve(en.target);
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
