@@ -17,12 +17,43 @@ const social: [string, string][] = [
   ["GitHub", "https://github.com/akshatsonic"],
   ["X", "https://x.com/akshatsonic"],
 ];
+const projects = [
+  {
+    number: "01",
+    title: "Brief",
+    description: "A daily Kindle magazine assembled from your own sources, with an AI editorial pass for selection, summaries, and watchouts.",
+    stack: ["Python", "OpenAI", "Chromium"],
+    href: "https://github.com/akshatsonic/brief",
+    action: "Explore the source",
+    visual: "magazine",
+  },
+  {
+    number: "02",
+    title: "Aviator",
+    description: "An experiment currently taking shape. The repository is the working log for the implementation as it develops.",
+    stack: ["Experiment", "In progress"],
+    href: "https://github.com/akshatsonic/aviator",
+    action: "Explore the source",
+    visual: "flight",
+  },
+  {
+    number: "03",
+    title: "Bittr",
+    description: "An offline, peer-to-peer workspace timeline where posts hop between Android phones over Bluetooth Low Energy.",
+    stack: ["Kotlin", "Jetpack Compose", "Bluetooth LE"],
+    href: "https://github.com/akshatsonic/bittr",
+    action: "Explore the source",
+    visual: "mesh",
+  },
+];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-type="software" data-radius="sharp" data-motion>
   <head>
     <BaseHead title="Akshat Soni — Software engineer and photographer" description="Akshat Soni is a software engineer who photographs festivals and cities after dark, and writes notes on systems along the way." image="/portfolio-assets/instagram-posts/18044205263439212.webp" />
+    <meta name="page-type" content="software" />
+    <meta name="site-kind" content="software" />
     <Fonts />
   </head>
   <body class="dr">
@@ -36,11 +67,63 @@ const social: [string, string][] = [
         <h1 class="dr-h1"><span class="mask"><span>A dust in the cosmos,</span></span><span class="mask"><span>trying to make a difference.</span></span></h1>
         <p class="dr-sub" data-late>Visual storyteller documenting life through a creative lens, architecting resilient backend infrastructure by day, and writing down the lessons found in both.</p>
         <div class="dr-actions" data-late>
-          <a class="dr-btn" href="#photographs">See the photographs</a>
+          <a class="dr-btn" href="#tinkering">See what I'm building</a>
           <ul class="dr-social">
             {social.map(([t, h]) => <li><a href={h} target="_blank" rel="noopener noreferrer">{t} ↗</a></li>)}
           </ul>
         </div>
+        </div>
+      </section>
+
+      <section class="dr-sec dr-tinkering" id="tinkering">
+        <div class="dr-sec-head">
+          <div class="dr-sec-title">
+            <h2>Tinkering</h2>
+            <p>Small tools and digital spaces built to answer my own questions.</p>
+          </div>
+          <a class="dr-link" href="https://github.com/akshatsonic?tab=repositories" target="_blank" rel="noopener noreferrer">All projects ↗</a>
+        </div>
+        <div class="dr-projects">
+          {projects.map((project) => (
+            <article class="dr-project">
+              <div class="dr-project-copy">
+                <span class="dr-project-number">{project.number} / project</span>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+                <ul class="dr-project-stack" aria-label="Technologies">
+                  {project.stack.map((item) => <li>{item}</li>)}
+                </ul>
+                <a class="dr-project-link" href={project.href} target={project.href.startsWith("http") ? "_blank" : undefined} rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}>
+                  <span>{project.action}</span><span aria-hidden="true">↗</span>
+                </a>
+              </div>
+
+              <div class={`dr-project-visual dr-project-visual--${project.visual}`} aria-hidden="true">
+                {project.visual === "magazine" && (
+                  <div class="dr-magazine">
+                    <span class="dr-magazine-kicker">The Brief / Daily edition</span>
+                    <b>Your sources,<br />edited for focus.</b>
+                    <div><i></i><i></i><i></i></div>
+                  </div>
+                )}
+                {project.visual === "flight" && (
+                  <div class="dr-flight">
+                    <i></i><i></i><i></i>
+                    <b>↗</b>
+                    <span>aviator / experiment 02</span>
+                  </div>
+                )}
+                {project.visual === "mesh" && (
+                  <div class="dr-phone">
+                    <div class="dr-phone-bar"><i></i><span>Bittr / workspace</span><b>•••</b></div>
+                    <div class="dr-editor-lines"><strong></strong><span></span><span></span><span></span><span></span></div>
+                    <div class="dr-publish"><i></i><span>3 peers nearby</span><b>Sync</b></div>
+                  </div>
+                )}
+                <span class="dr-signal"><i></i></span>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -121,6 +204,7 @@ const social: [string, string][] = [
           <a class="dr-btn" data-reveal data-delay="2" href="https://x.com/akshatsonic" target="_blank" rel="noopener noreferrer">Say hello on X</a>
         </div>
         <dl class="dr-stats" data-reveal data-delay="1">
+          <div><dd>{projects.length}</dd><dt>projects</dt></div>
           <div><dd>{photographs.length}</dd><dt>photographs</dt></div>
           <div><dd>{posts.length}</dd><dt>articles</dt></div>
         </dl>
